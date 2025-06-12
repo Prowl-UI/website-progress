@@ -60,6 +60,12 @@ body {
   overflow: hidden;
 }
 
+@media (max-width: 991.98px) {
+  .hero-modern {
+    padding-top: 70px; /* Adjust if navbar height changes */
+  }
+}
+
 .hero-modern::before {
   content: "";
   position: absolute;
@@ -158,7 +164,7 @@ body {
 }
 
 .cta-section {
-  background: linear-gradient(45deg, var(--primary-red), var(--red-hover));
+  background: var(--red-hover);
   color: white;
   padding: 4rem 0;
   position: relative;
