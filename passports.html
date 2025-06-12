@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Passport Services - Embassy of Kenya</title>
+    <meta
+      name="description"
+      content="Kenya passport services including new applications, renewals, and replacements. Requirements, procedures, and processing times."
+    />
+    <meta
+      name="keywords"
+      content="Kenya passport, passport renewal, passport application, travel documents Kenya, consular services"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="navbar-placeholder"></div>
+
+    <main class="container py-5">
+      <div class="row">
+        <div class="col-12">
+          <h1 class="mb-4">Passport Services</h1>
+
+          <div class="content-text">
+            <p class="lead">
+              The Embassy provides comprehensive passport services for Kenyan
+              citizens including new applications, renewals, and replacements.
+            </p>
+
+            <div class="row mt-5">
+              <div class="col-lg-8">
+                <h2 class="h4 mb-3">Service Types</h2>
+
+                <div class="accordion" id="passportAccordion">
+                  <div class="accordion-item">
+                    <h3 class="accordion-header">
+                      <button
+                        class="accordion-button"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#newPassport"
+                        aria-expanded="true"
+                        aria-controls="newPassport"
+                      >
+                        <i class="fas fa-plus-circle me-2 text-success"></i>New
+                        Passport Application
+                      </button>
+                    </h3>
+                    <div
+                      id="newPassport"
+                      class="accordion-collapse collapse show"
+                      data-bs-parent="#passportAccordion"
+                    >
+                      <div class="accordion-body">
+                        <h4 class="h6">Required Documents:</h4>
+                        <ul>
+                          <li>Completed passport application form</li>
+                          <li>Original birth certificate</li>
+                          <li>Copy of national ID or birth certificate</li>
+                          <li>Two passport-size photographs</li>
+                          <li>Payment receipt</li>
+                        </ul>
+                        <p>
+                          <strong>Processing Time:</strong> 4-6 weeks<br />
+                          <strong>Fee:</strong> Contact embassy for current
+                          rates
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="accordion-item">
+                    <h3 class="accordion-header">
+                      <button
+                        class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#renewalPassport"
+                        aria-expanded="false"
+                        aria-controls="renewalPassport"
+                      >
+                        <i
+                          class="fas fa-sync-alt me-2"
+                          style="color: var(--primary-red)"
+                        ></i
+                        >Passport Renewal
+                      </button>
+                    </h3>
+                    <div
+                      id="renewalPassport"
+                      class="accordion-collapse collapse"
+                      data-bs-parent="#passportAccordion"
+                    >
+                      <div class="accordion-body">
+                        <h4 class="h6">Required Documents:</h4>
+                        <ul>
+                          <li>Completed passport application form</li>
+                          <li>Original expired/expiring passport</li>
+                          <li>Copy of national ID</li>
+                          <li>Two passport-size photographs</li>
+                          <li>Payment receipt</li>
+                        </ul>
+                        <p>
+                          <strong>Processing Time:</strong> 3-4 weeks<br />
+                          <strong>Fee:</strong> Contact embassy for current
+                          rates
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="accordion-item">
+                    <h3 class="accordion-header">
+                      <button
+                        class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#replacementPassport"
+                        aria-expanded="false"
+                        aria-controls="replacementPassport"
+                      >
+                        <i
+                          class="fas fa-exclamation-triangle me-2 text-warning"
+                        ></i
+                        >Lost/Stolen Passport Replacement
+                      </button>
+                    </h3>
+                    <div
+                      id="replacementPassport"
+                      class="accordion-collapse collapse"
+                      data-bs-parent="#passportAccordion"
+                    >
+                      <div class="accordion-body">
+                        <h4 class="h6">Required Documents:</h4>
+                        <ul>
+                          <li>Completed passport application form</li>
+                          <li>Police report (for lost/stolen passport)</li>
+                          <li>Original birth certificate</li>
+                          <li>Copy of national ID</li>
+                          <li>Two passport-size photographs</li>
+                          <li>Copy of lost passport (if available)</li>
+                          <li>Payment receipt</li>
+                        </ul>
+                        <p>
+                          <strong>Processing Time:</strong> 4-6 weeks<br />
+                          <strong>Fee:</strong> Contact embassy for current
+                          rates
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-5">
+                  <h3 class="h5 mb-3">Application Process</h3>
+                  <ol class="list-group list-group-numbered">
+                    <li
+                      class="list-group-item d-flex justify-content-between align-items-start"
+                    >
+                      <div class="ms-2 me-auto">
+                        <div class="fw-bold">Submit Application</div>
+                        Complete forms and gather required documents
+                      </div>
+                      <span
+                        class="badge"
+                        style="
+                          background-color: var(--primary-red);
+                          color: white;
+                        "
+                        class="rounded-pill"
+                        >Step 1</span
+                      >
+                    </li>
+                    <li
+                      class="list-group-item d-flex justify-content-between align-items-start"
+                    >
+                      <div class="ms-2 me-auto">
+                        <div class="fw-bold">Document Review</div>
+                        Embassy reviews and verifies documents
+                      </div>
+                      <span
+                        class="badge"
+                        style="
+                          background-color: var(--primary-red);
+                          color: white;
+                        "
+                        class="rounded-pill"
+                        >Step 2</span
+                      >
+                    </li>
+                    <li
+                      class="list-group-item d-flex justify-content-between align-items-start"
+                    >
+                      <div class="ms-2 me-auto">
+                        <div class="fw-bold">Processing</div>
+                        Application sent to Nairobi for processing
+                      </div>
+                      <span
+                        class="badge"
+                        style="
+                          background-color: var(--primary-red);
+                          color: white;
+                        "
+                        class="rounded-pill"
+                        >Step 3</span
+                      >
+                    </li>
+                    <li
+                      class="list-group-item d-flex justify-content-between align-items-start"
+                    >
+                      <div class="ms-2 me-auto">
+                        <div class="fw-bold">Collection</div>
+                        Passport ready for collection at embassy
+                      </div>
+                      <span class="badge bg-success rounded-pill">Final</span>
+                    </li>
+                  </ol>
+                </div>
+              </div>
+
+              <div class="col-lg-4">
+                <div class="card">
+                  <div
+                    class="card-header"
+                    style="background-color: var(--primary-green); color: white"
+                  >
+                    <h3 class="h6 mb-0">
+                      <i class="fas fa-info-circle me-2"></i>Important
+                      Information
+                    </h3>
+                  </div>
+                  <div class="card-body">
+                    <h4 class="h6">Office Hours</h4>
+                    <p class="small mb-3">
+                      Monday - Friday: 9:00 AM - 3:00 PM<br />
+                      Closed on weekends and public holidays
+                    </p>
+
+                    <h4 class="h6">Contact Information</h4>
+                    <p class="small mb-3">
+                      Phone: [Embassy Phone]<br />
+                      Email: [Embassy Email]
+                    </p>
+
+                    <h4 class="h6">Payment Methods</h4>
+                    <ul class="small list-unstyled mb-3">
+                      <li>
+                        <i
+                          class="fas fa-check me-1"
+                          style="color: var(--primary-green)"
+                        ></i>
+                        Money order
+                      </li>
+                      <li>
+                        <i
+                          class="fas fa-check me-1"
+                          style="color: var(--primary-green)"
+                        ></i>
+                        Cashier's check
+                      </li>
+                      <li>
+                        <i
+                          class="fas fa-times me-1"
+                          style="color: var(--primary-red)"
+                        ></i>
+                        Personal checks
+                      </li>
+                      <li>
+                        <i
+                          class="fas fa-times me-1"
+                          style="color: var(--primary-red)"
+                        ></i>
+                        Cash
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="alert alert-warning mt-3" role="alert">
+                  <h4 class="alert-heading h6">
+                    <i class="fas fa-exclamation-triangle me-2"></i>Important
+                    Note
+                  </h4>
+                  <p class="small mb-0">
+                    All documents must be original or certified copies.
+                    Incomplete applications will be returned.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
