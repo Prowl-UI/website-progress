@@ -49,20 +49,270 @@ body {
   opacity: 0.9;
 }
 
-/* Homepage Hero Styles */
+/* Homepage Hero Styles with Slider */
 .hero-modern {
   background: var(--primary-green);
   color: var(--white);
-  min-height: 70vh;
+  min-height: 75vh;
   display: flex;
   align-items: center;
   position: relative;
   overflow: hidden;
 }
 
+.hero-slider {
+  background: none;
+  position: relative;
+  overflow: hidden;
+  min-height: 75vh;
+}
+
+.slider-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.slider-track {
+  display: flex;
+  width: 500%; /* 5 slides × 100% */
+  height: 100%;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+  width: 20%; /* 100% ÷ 5 slides */
+  height: 100%;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.slide-background {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.slide-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+}
+
+.slide-placeholder {
+  text-align: center;
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+.slide-placeholder h3 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.slide-placeholder p {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.slide-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+/* Navigation Buttons */
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  color: var(--text-dark);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 3;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.slider-btn:hover {
+  background: white;
+  transform: translateY(-50%) scale(1.1);
+  color: var(--primary-green);
+}
+
+.prev-btn {
+  left: 20px;
+}
+
+.next-btn {
+  right: 20px;
+}
+
+/* Slide Indicators */
+.slider-indicators {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 15px;
+  z-index: 3;
+}
+
+.indicator {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.indicator.active,
+.indicator:hover {
+  background: white;
+  border-color: white;
+  transform: scale(1.2);
+}
+
+/* Notices Section Styles */
+.notices-section {
+  background: var(--red-hover);
+  color: var(--white);
+  padding: 3rem 0;
+  position: relative;
+}
+
+.notices-section .container {
+  position: relative;
+}
+
+.notices-header {
+  text-align: center;
+}
+
+.notices-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0;
+}
+
+.notice-item {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 2rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  height: 100%;
+}
+
+.notice-item:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.notice-icon {
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-size: 1.25rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.notice-content {
+  flex: 1;
+}
+
+.notice-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+.notice-text {
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.notice-date {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* Responsive adjustments for notices */
+@media (max-width: 768px) {
+  .notices-section {
+    padding: 2.5rem 0;
+  }
+
+  .notices-title {
+    font-size: 1.75rem;
+  }
+
+  .notice-item {
+    padding: 1.5rem;
+    gap: 1rem;
+  }
+
+  .notice-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .notice-title {
+    font-size: 1.1rem;
+  }
+
+  .notice-text {
+    font-size: 0.9rem;
+  }
+}
+
 @media (max-width: 991.98px) {
   .hero-modern {
-    padding-top: 70px; /* Adjust if navbar height changes */
+    padding-top: 100px;
+    min-height: 70vh;
+  }
+
+  .hero-slider {
+    min-height: 70vh;
   }
 }
 
@@ -1077,5 +1327,42 @@ footer {
 
   .news-item:hover {
     transform: none;
+  }
+
+  /* Slider responsive adjustments */
+  .slider-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .prev-btn {
+    left: 15px;
+  }
+
+  .next-btn {
+    right: 15px;
+  }
+
+  .slider-indicators {
+    bottom: 20px;
+    gap: 10px;
+  }
+
+  .indicator {
+    width: 12px;
+    height: 12px;
+  }
+
+  .slide-placeholder h3 {
+    font-size: 1.5rem;
+  }
+
+  .slide-placeholder p {
+    font-size: 1rem;
+  }
+
+  .slide-placeholder i {
+    font-size: 2.5rem !important;
   }
 }
