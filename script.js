@@ -116,6 +116,72 @@ class HeroSlider {
   }
 }
 
+// Touch tracking for mobile navigation
+class TouchTracker {
+  constructor() {
+    this.startY = 0;
+    this.startX = 0;
+    this.startTime = 0;
+    this.isScrolling = false;
+    this.touchMoved = false;
+  }
+
+  reset() {
+    this.startY = 0;
+    this.startX = 0;
+    this.startTime = 0;
+    this.isScrolling = false;
+    this.touchMoved = false;
+  }
+
+  handleStart(e) {
+    this.startY = e.touches[0].clientY;
+    this.startX = e.touches[0].clientX;
+    this.startTime = Date.now();
+    this.isScrolling = false;
+    this.touchMoved = false;
+  }
+
+  handleMove(e) {
+    if (!this.startY) return;
+
+    const currentY = e.touches[0].clientY;
+    const currentX = e.touches[0].clientX;
+    const deltaY = Math.abs(currentY - this.startY);
+    const deltaX = Math.abs(currentX - this.startX);
+
+    // If user moved more than 10px in any direction, consider it scrolling/movement
+    if (deltaY > 10 || deltaX > 10) {
+      this.touchMoved = true;
+
+      // If vertical movement is greater than horizontal, it's likely scrolling
+      if (deltaY > deltaX && deltaY > 15) {
+        this.isScrolling = true;
+      }
+    }
+  }
+
+  handleEnd() {
+    const touchDuration = Date.now() - this.startTime;
+
+    // Consider it a tap only if:
+    // 1. Touch duration is short (< 300ms)
+    // 2. No significant movement occurred
+    // 3. Not identified as scrolling
+    const isTap = touchDuration < 300 && !this.touchMoved && !this.isScrolling;
+
+    const result = {
+      isTap,
+      isScrolling: this.isScrolling,
+      touchMoved: this.touchMoved,
+      duration: touchDuration,
+    };
+
+    this.reset();
+    return result;
+  }
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   const placeholder = document.getElementById("navbar-placeholder");
 
@@ -212,11 +278,14 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         });
       } else {
-        // Mobile dropdown functionality - FINAL CLEAN VERSION
+        // Mobile dropdown functionality - ENHANCED WITH TOUCH TRACKING
+
+        // Initialize touch tracker
+        const touchTracker = new TouchTracker();
 
         // Wait for DOM to be fully ready
         setTimeout(() => {
-          // Handle dropdown toggle clicks
+          // Handle dropdown toggle clicks with touch tracking
           const dropdownToggles = document.querySelectorAll(
             ".nav-link.dropdown-toggle"
           );
@@ -224,17 +293,48 @@ document.addEventListener("DOMContentLoaded", function () {
           dropdownToggles.forEach(function (toggle) {
             // Remove any existing listeners
             toggle.removeEventListener("click", handleDropdownClick);
+            toggle.removeEventListener("touchstart", handleDropdownTouchStart);
+            toggle.removeEventListener("touchmove", handleDropdownTouchMove);
+            toggle.removeEventListener("touchend", handleDropdownTouchEnd);
 
-            // Add new listener
+            // Add new listeners with touch tracking
+            toggle.addEventListener("touchstart", handleDropdownTouchStart, {
+              passive: true,
+            });
+            toggle.addEventListener("touchmove", handleDropdownTouchMove, {
+              passive: true,
+            });
+            toggle.addEventListener("touchend", handleDropdownTouchEnd);
             toggle.addEventListener("click", handleDropdownClick);
-            toggle.addEventListener("touchstart", handleDropdownClick);
           });
 
+          function handleDropdownTouchStart(e) {
+            touchTracker.handleStart(e);
+          }
+
+          function handleDropdownTouchMove(e) {
+            touchTracker.handleMove(e);
+          }
+
+          function handleDropdownTouchEnd(e) {
+            const touchResult = touchTracker.handleEnd();
+
+            // Only proceed with dropdown action if it was a clear tap
+            if (touchResult.isTap) {
+              e.preventDefault();
+              e.stopImmediatePropagation();
+              handleDropdownAction(e.currentTarget);
+            }
+          }
+
           function handleDropdownClick(e) {
+            // For mouse clicks or as fallback
             e.preventDefault();
             e.stopImmediatePropagation();
+            handleDropdownAction(e.currentTarget);
+          }
 
-            const toggle = e.currentTarget;
+          function handleDropdownAction(toggle) {
             const parentDropdown = toggle.closest(".nav-item.dropdown");
             const targetMenu = parentDropdown
               ? parentDropdown.querySelector(".dropdown-menu")
@@ -291,14 +391,59 @@ document.addEventListener("DOMContentLoaded", function () {
                     behavior: "smooth",
                   });
                 }
-              }, 100); // Slightly longer delay to ensure dropdown is fully rendered
+              }, 100);
             }
           }
 
-          // Handle dropdown item clicks
+          // Handle dropdown item clicks with touch tracking
           const dropdownItems = document.querySelectorAll(".dropdown-item");
+          const itemTouchTracker = new TouchTracker();
 
           dropdownItems.forEach(function (item) {
+            // Add touch tracking for dropdown items
+            item.addEventListener(
+              "touchstart",
+              function (e) {
+                itemTouchTracker.handleStart(e);
+              },
+              { passive: true }
+            );
+
+            item.addEventListener(
+              "touchmove",
+              function (e) {
+                itemTouchTracker.handleMove(e);
+              },
+              { passive: true }
+            );
+
+            item.addEventListener("touchend", function (e) {
+              const touchResult = itemTouchTracker.handleEnd();
+
+              // Only navigate if it was a clear tap
+              if (touchResult.isTap) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                const href = this.getAttribute("href");
+
+                if (href && href !== "#" && href.trim() !== "") {
+                  // Close the mobile menu first
+                  const navbarCollapse =
+                    document.querySelector(".navbar-collapse");
+                  if (navbarCollapse) {
+                    navbarCollapse.classList.remove("show");
+                  }
+
+                  // Navigate after a short delay
+                  setTimeout(function () {
+                    window.location.href = href;
+                  }, 150);
+                }
+              }
+            });
+
+            // Fallback click handler
             item.addEventListener("click", function (e) {
               e.preventDefault();
               e.stopPropagation();
@@ -321,12 +466,56 @@ document.addEventListener("DOMContentLoaded", function () {
             });
           });
 
-          // Handle regular nav-link clicks (non-dropdown)
+          // Handle regular nav-link clicks (non-dropdown) with touch tracking
           const regularNavLinks = document.querySelectorAll(
             ".nav-link:not(.dropdown-toggle)"
           );
+          const navLinkTouchTracker = new TouchTracker();
 
           regularNavLinks.forEach(function (link) {
+            // Add touch tracking for regular nav links
+            link.addEventListener(
+              "touchstart",
+              function (e) {
+                navLinkTouchTracker.handleStart(e);
+              },
+              { passive: true }
+            );
+
+            link.addEventListener(
+              "touchmove",
+              function (e) {
+                navLinkTouchTracker.handleMove(e);
+              },
+              { passive: true }
+            );
+
+            link.addEventListener("touchend", function (e) {
+              const touchResult = navLinkTouchTracker.handleEnd();
+
+              // Only navigate if it was a clear tap
+              if (touchResult.isTap) {
+                const href = this.getAttribute("href");
+
+                if (href && href !== "#" && href.trim() !== "") {
+                  e.preventDefault();
+
+                  // Close the mobile menu
+                  const navbarCollapse =
+                    document.querySelector(".navbar-collapse");
+                  if (navbarCollapse) {
+                    navbarCollapse.classList.remove("show");
+                  }
+
+                  // Navigate
+                  setTimeout(function () {
+                    window.location.href = href;
+                  }, 150);
+                }
+              }
+            });
+
+            // Fallback click handler
             link.addEventListener("click", function (e) {
               const href = this.getAttribute("href");
 
@@ -349,7 +538,7 @@ document.addEventListener("DOMContentLoaded", function () {
           });
         }, 500);
 
-        // Handle hamburger menu opening - RESTORED TO WORKING 250MS
+        // Handle hamburger menu opening
         const hamburgerToggler = document.querySelector(".navbar-toggler");
         const navbarCollapse = document.querySelector(".navbar-collapse");
 
@@ -360,7 +549,7 @@ document.addEventListener("DOMContentLoaded", function () {
               if (navbarCollapse.classList.contains("show")) {
                 scrollToActiveItemFast();
               }
-            }, 50); // Back to working 100ms initial delay
+            }, 50);
           });
 
           // Also listen for Bootstrap's collapse event as backup
@@ -369,7 +558,7 @@ document.addEventListener("DOMContentLoaded", function () {
           });
         }
 
-        // Function to scroll to active nav item - RESTORED TO WORKING TIMING
+        // Function to scroll to active nav item
         function scrollToActiveItemFast() {
           // Look for active elements
           const activeDropdownItem = document.querySelector(
@@ -384,7 +573,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
           let targetElement = null;
 
-          // Priority 1: Active dropdown item (like "Wildlife Trafficking")
+          // Priority 1: Active dropdown item
           if (activeDropdownItem) {
             const parentDropdown = activeDropdownItem.closest(".dropdown");
             if (parentDropdown) {
@@ -404,7 +593,7 @@ document.addEventListener("DOMContentLoaded", function () {
               }
             }
           }
-          // Priority 2: Active nav link (like "Gallery")
+          // Priority 2: Active nav link
           else if (activeNavLink) {
             targetElement = activeNavLink;
           }
@@ -413,7 +602,7 @@ document.addEventListener("DOMContentLoaded", function () {
             targetElement = activeParentDropdown;
           }
 
-          // Scroll to the target element with working timing
+          // Scroll to the target element
           if (targetElement && navbarCollapse) {
             setTimeout(() => {
               try {
@@ -425,7 +614,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Position the active item near the top
                 const scrollTarget = Math.max(0, relativeTop - 80);
 
-                // Smooth scroll with working timing
+                // Smooth scroll
                 navbarCollapse.scrollTo({
                   top: scrollTarget,
                   behavior: "smooth",
@@ -433,7 +622,7 @@ document.addEventListener("DOMContentLoaded", function () {
               } catch (error) {
                 console.error("Scroll error:", error);
               }
-            }, 50); // Back to working 150ms scroll delay
+            }, 50);
           }
         }
 
@@ -449,7 +638,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       }
 
-      // Set active link based on current page - FINAL FIX
+      // Set active link based on current page
       const currentPage =
         window.location.pathname.split("/").pop() || "index.html";
       const currentHash = window.location.hash;
