@@ -1,6 +1,6 @@
 :root {
-  --primary-green: #4a9d4a;
-  --primary-red: #bb1818;
+  --primary-green: #378037;
+  --primary-red: rgb(173, 71, 50);
   --red-hover: rgb(173, 71, 50);
   --navbar-black: #1a1a1a;
   --white: #ffffff;
@@ -9,6 +9,7 @@
   --text-muted: #bfc3c7;
   --dark-bg: #0a0a0a;
   --light-bg: #f8f9fa;
+  --off-white: #d3d3d3;
   --border-dark: #333;
   --border-light: #444;
   --green-hover: #45a049;
@@ -49,7 +50,108 @@ body {
   opacity: 0.9;
 }
 
-/* Homepage Hero Styles with Slider */
+/* Welcome Hero Section */
+.welcome-hero {
+  background: var(--white);
+  color: var(--text-dark);
+  padding: 4rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.welcome-hero .container {
+  position: relative;
+  z-index: 2;
+}
+
+.welcome-hero h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  color: var(--text-dark);
+}
+
+.welcome-hero .lead {
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-dark);
+  opacity: 0.8;
+}
+
+.welcome-hero .btn {
+  font-weight: 600;
+  padding: 0.875rem 2rem;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-hero .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.welcome-hero .btn-danger {
+  background-color: var(--primary-red);
+  border-color: var(--primary-red);
+  color: var(--white);
+}
+
+.welcome-hero .btn-danger:hover {
+  background-color: var(--red-hover);
+  border-color: var(--red-hover);
+}
+
+.welcome-hero .btn-outline-success {
+  color: var(--primary-green);
+  border-color: var(--primary-green);
+  background-color: transparent;
+}
+
+.welcome-hero .btn-outline-success:hover {
+  background-color: var(--primary-green);
+  color: var(--white);
+  border-color: var(--primary-green);
+}
+
+/* Responsive adjustments for welcome hero */
+@media (max-width: 768px) {
+  .welcome-hero {
+    padding: 3rem 0;
+  }
+
+  .welcome-hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .welcome-hero .lead {
+    font-size: 1.1rem;
+  }
+
+  .welcome-hero .btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .welcome-hero h1 {
+    font-size: 2rem;
+  }
+
+  .welcome-hero .d-flex {
+    flex-direction: column;
+  }
+
+  .welcome-hero .btn {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+}
 .hero-modern {
   background: var(--primary-green);
   color: var(--white);
@@ -105,6 +207,9 @@ body {
   top: 0;
   left: 0;
   display: block;
+  /* Improve image rendering */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .slide-placeholder {
@@ -124,14 +229,14 @@ body {
   margin: 0;
 }
 
+/* Remove hero overlay and content for clean image display */
 .slide-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 1;
+  display: none; /* Remove the dark overlay */
+}
+
+/* Hide hero content (text and buttons) */
+.hero-content {
+  display: none; /* This will hide all text and buttons */
 }
 
 /* Navigation Buttons */
@@ -166,7 +271,7 @@ body {
   right: 20px;
 }
 
-/* Slide Indicators */
+/* FIXED Slide Indicators - Chrome Mobile Compatible */
 .slider-indicators {
   position: absolute;
   bottom: 30px;
@@ -175,23 +280,66 @@ body {
   display: flex;
   gap: 15px;
   z-index: 3;
+  /* Force hardware acceleration for better rendering */
+  will-change: transform;
+  backface-visibility: hidden;
+  /* Prevent any container distortion */
+  align-items: center;
+  justify-content: center;
 }
 
 .indicator {
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.7);
-  background: transparent;
+  /* CRITICAL: Force exact circular shape in all browsers */
+  width: 15px !important;
+  height: 15px !important;
+  border-radius: 50% !important;
+  border: 2px solid rgba(255, 255, 255, 0.7) !important;
+  background: transparent !important;
   cursor: pointer;
   transition: all 0.3s ease;
+
+  /* Prevent ANY squishing or distortion */
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+  min-width: 15px !important;
+  min-height: 15px !important;
+  max-width: 15px !important;
+  max-height: 15px !important;
+
+  /* Force proper box model */
+  box-sizing: border-box !important;
+
+  /* Chrome/Safari specific fixes */
+  -webkit-border-radius: 50% !important;
+  -webkit-transform: translateZ(0) !important;
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
+  -webkit-appearance: none !important;
+
+  /* Additional Chrome mobile fixes */
+  appearance: none !important;
+  outline: none !important;
+
+  /* Force aspect ratio 1:1 */
+  aspect-ratio: 1 / 1 !important;
+
+  /* Prevent any text or content */
+  font-size: 0 !important;
+  line-height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+
+  /* Force rendering layer */
+  transform: translateZ(0) !important;
+  isolation: isolate !important;
 }
 
 .indicator.active,
 .indicator:hover {
-  background: white;
-  border-color: white;
-  transform: scale(1.2);
+  background: white !important;
+  border-color: white !important;
+  transform: translateZ(0) scale(1.2) !important;
+  -webkit-transform: translateZ(0) scale(1.2) !important;
 }
 
 /* Notices Section Styles */
@@ -325,11 +473,6 @@ body {
   bottom: 0;
   background: rgba(0, 0, 0, 0.3);
   z-index: 1;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
 }
 
 .geometric-shapes {
@@ -690,7 +833,7 @@ footer {
   color: var(--white);
   text-align: center;
   padding: 2rem 0;
-  margin-top: 3rem;
+  margin-top: 0;
 }
 
 /* Kenya Color Scheme for Cards and Elements */
@@ -912,7 +1055,7 @@ footer {
   left: 0;
   right: 0;
   z-index: 1030;
-  background-color: var(--dark-bg) !important;
+  background-color: #f8f9fa !important; /* Light gray background */
   min-height: 100px;
 }
 
@@ -920,7 +1063,7 @@ footer {
 @media (max-width: 991.98px) {
   #navbar-placeholder {
     min-height: 100px !important;
-    background-color: var(--dark-bg) !important;
+    background-color: #f8f9fa !important; /* Light gray background */
   }
 }
 
@@ -938,18 +1081,18 @@ footer {
 
 /* Ensure navbar inside placeholder has same background */
 #navbar-placeholder .navbar {
-  background-color: var(--dark-bg) !important;
+  background-color: #f8f9fa !important; /* Light gray background */
   min-height: inherit;
   position: relative;
 }
 
 #navbar-placeholder .navbar .container {
   min-height: inherit;
-  background-color: var(--dark-bg) !important;
+  background-color: #f8f9fa !important; /* Light gray background */
 }
 
 #navbar-placeholder .navbar-brand-wrapper {
-  background-color: var(--dark-bg) !important;
+  background-color: #f8f9fa !important; /* Light gray background */
 }
 
 /* Responsive body padding adjustments */
@@ -1016,19 +1159,19 @@ footer {
 
 /* Top line - Red */
 .navbar-toggler::before {
-  background-color: var(--primary-red) !important;
+  background-color: var(--primary-red) !important; /* Red line */
 }
 
 /* Bottom line - Green */
 .navbar-toggler::after {
-  background-color: var(--primary-green) !important;
+  background-color: var(--primary-green) !important; /* Green line */
 }
 
-/* Middle line - White (we'll add this as a span in HTML) */
+/* Middle line - Black */
 .navbar-toggler .hamburger-middle {
   width: 35px !important;
   height: 4px !important;
-  background-color: var(--white) !important;
+  background-color: var(--text-dark) !important; /* Black middle line */
   border-radius: 2px !important;
   display: block !important;
 }
@@ -1091,9 +1234,9 @@ footer {
   }
 }
 
-/* Navbar styling */
+/* Navbar styling - UPDATED COLORS ONLY */
 .navbar {
-  background-color: var(--dark-bg) !important;
+  background-color: #f8f9fa !important; /* Light gray background */
   transition: all 0.3s ease;
   min-height: 100px;
 }
@@ -1108,11 +1251,15 @@ footer {
   display: flex;
   justify-content: center;
   padding: 1rem 0 0.5rem 0;
+  background-color: #f8f9fa !important; /* Keep light gray for brand area */
 }
 
 .navbar-nav-wrapper {
   width: 100%;
   position: relative;
+  background-color: var(
+    --off-white
+  ) !important; /* Off-white background for nav links area */
 }
 
 @media (min-width: 992px) {
@@ -1129,12 +1276,14 @@ footer {
   }
 
   .navbar-brand-wrapper {
-    border-bottom: 1px solid var(--border-dark);
+    border-bottom: 1px solid #dee2e6; /* Light border */
     margin-bottom: 0;
   }
 
   .navbar-nav-wrapper .navbar-collapse {
     width: 100%;
+    background-color: var(--off-white) !important; /* Off-white background */
+    padding: 0.5rem 0;
   }
 
   .navbar-nav {
@@ -1145,7 +1294,7 @@ footer {
 }
 
 .nav-link {
-  color: var(--text-muted) !important;
+  color: var(--primary-green) !important; /* Green text color */
   font-weight: 500;
   padding: 0.75rem 0.5rem !important;
   transition: all 0.3s ease;
@@ -1191,35 +1340,37 @@ footer {
 }
 
 .nav-link:hover {
-  color: var(--red-hover) !important;
-  border-bottom-color: var(--red-hover);
+  color: var(--primary-green) !important; /* Keep green on hover */
+  border-bottom-color: var(--primary-green);
 }
 
 .nav-link.active {
-  color: var(--red-hover) !important;
-  border-bottom-color: var(--red-hover);
+  color: var(--primary-green) !important; /* Green for active instead of red */
+  border-bottom-color: var(--primary-green);
 }
 
 .dropdown-menu {
-  background-color: var(--dark-bg);
-  border: 1px solid var(--border-dark);
-  box-shadow: 0 4px 6px var(--shadow-dark);
+  background-color: #ffffff; /* White background for dropdowns */
+  border: 1px solid #dee2e6; /* Light border */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .dropdown-item {
-  color: var(--text-muted);
+  color: var(--primary-green); /* Green text for dropdown items */
   transition: all 0.3s ease;
 }
 
 .dropdown-item:hover {
-  background-color: var(--red-hover);
-  color: var(--white);
+  background-color: var(--primary-green); /* Green background on hover */
+  color: var(--white); /* White text on hover */
 }
 
 /* Active states for dropdown items */
 .dropdown-item.active {
-  background-color: var(--red-hover);
-  color: var(--white);
+  background-color: var(
+    --primary-green
+  ); /* Green background for active instead of red */
+  color: var(--white); /* White text */
   font-weight: 600;
 }
 
@@ -1268,101 +1419,194 @@ footer {
     justify-content: flex-start;
     padding-left: 15px;
   }
+
+  /* Mobile navbar height and scrolling improvements */
+  body {
+    padding-top: 100px;
+  }
+
+  /* Mobile navigation improvements */
+  .navbar-nav {
+    max-height: none; /* Remove height restrictions */
+  }
+
+  /* Better touch targets */
+  .nav-item {
+    min-height: 44px; /* Minimum touch target size */
+    display: flex;
+    align-items: center;
+  }
+
+  .dropdown-item {
+    min-height: 44px; /* Minimum touch target size */
+    display: flex;
+    align-items: center;
+  }
 }
+
 @media (max-width: 991.98px) {
+  /* Ensure dropdown toggles are clickable */
+  .dropdown-toggle {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    touch-action: manipulation !important;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+  }
+
   .dropdown-menu {
     position: static !important;
     transform: none !important;
-    width: 100%;
+    width: 100% !important;
     box-shadow: none;
     border: none;
-    background-color: var(--border-dark);
+    background-color: #e9ecef; /* Light gray for mobile dropdowns */
     margin: 0;
+    padding: 0;
+    display: none; /* Hidden by default */
+    float: none !important; /* Prevent floating */
+    clear: both; /* Clear any floats */
+    pointer-events: auto !important;
+  }
+
+  /* Show dropdown when active */
+  .dropdown-menu.show {
+    display: block !important;
   }
 
   .dropdown-item {
     padding: 0.75rem 2rem;
-    border-bottom: 1px solid var(--border-light);
+    border-bottom: 1px solid #dee2e6;
+    word-wrap: break-word;
+    white-space: normal;
+    line-height: 1.4;
+    cursor: pointer !important;
+    transition: background-color 0.2s ease;
+    display: block !important; /* Force block display */
+    width: 100% !important; /* Full width */
+    text-decoration: none;
+    color: var(--primary-green);
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+  }
+
+  .dropdown-item:hover,
+  .dropdown-item:focus {
+    background-color: var(--primary-green) !important;
+    color: white !important;
+    text-decoration: none;
   }
 
   .dropdown-item:last-child {
     border-bottom: none;
   }
 
+  /* Force dropdown to appear below parent */
+  .nav-item.dropdown {
+    display: block !important;
+    width: 100% !important;
+  }
+
   .nav-link {
     border-bottom: none;
     border-left: 3px solid transparent;
+    word-wrap: break-word;
+    white-space: normal;
+    line-height: 1.4;
+    cursor: pointer !important;
+    display: block !important;
+    width: 100% !important;
+    padding: 1rem 1.25rem !important;
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
   }
 
   .nav-link:hover,
   .nav-link.active {
-    border-left-color: var(--red-hover);
+    border-left-color: var(--primary-green);
     border-bottom: none;
-    background-color: var(--red-transparent);
+    background-color: rgba(74, 157, 78, 0.1);
+  }
+
+  /* Mobile navbar nav-wrapper background */
+  .navbar-nav-wrapper {
+    background-color: var(--off-white) !important;
+  }
+
+  /* Mobile navbar scrolling when expanded */
+  .navbar-collapse {
+    max-height: 70vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    pointer-events: auto !important;
+    scroll-behavior: smooth; /* Smooth scrolling */
+  }
+
+  /* Ensure dropdown content is visible when opened */
+  .dropdown-menu.show {
+    display: block !important;
+    animation: fadeIn 0.2s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Ensure navbar-nav is vertical */
+  .navbar-nav {
+    flex-direction: column !important;
+    width: 100% !important;
+    pointer-events: auto !important;
+  }
+
+  /* Make nav items stack vertically */
+  .nav-item {
+    width: 100% !important;
+    min-height: 44px;
+    display: block !important;
+    pointer-events: auto !important;
+  }
+
+  /* Better mobile font sizes */
+  .nav-link {
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+  }
+
+  .dropdown-item {
+    font-size: 0.85rem;
+    font-weight: 400;
+    padding: 0.75rem 2.5rem;
+  }
+
+  /* Allow wrapping for very long items */
+  .dropdown-item.long-text {
+    white-space: normal;
+    word-wrap: break-word;
+    line-height: 1.3;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  /* Force all interactive elements to be clickable */
+  .navbar *[role="button"],
+  .navbar button,
+  .navbar a {
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+  }
+
+  .feature-card {
+    margin-top: 3rem; /* Add spacing on mobile */
   }
 }
 
-/* Responsive adjustments for new sections */
-@media (max-width: 768px) {
-  .section-title {
-    font-size: 2rem;
-  }
-
-  .gallery-item img,
-  .embassy-photo img {
-    height: 200px;
-  }
-
-  .embassy-photo {
-    height: 200px;
-  }
-
-  .gallery-placeholder {
-    height: 200px;
-  }
-
-  .embassy-photo.gallery-placeholder {
-    height: 200px;
-  }
-
-  .news-item:hover {
-    transform: none;
-  }
-
-  /* Slider responsive adjustments */
-  .slider-btn {
-    width: 40px;
-    height: 40px;
-    font-size: 1rem;
-  }
-
-  .prev-btn {
-    left: 15px;
-  }
-
-  .next-btn {
-    right: 15px;
-  }
-
-  .slider-indicators {
-    bottom: 20px;
-    gap: 10px;
-  }
-
-  .indicator {
-    width: 12px;
-    height: 12px;
-  }
-
-  .slide-placeholder h3 {
-    font-size: 1.5rem;
-  }
-
-  .slide-placeholder p {
-    font-size: 1rem;
-  }
-
-  .slide-placeholder i {
-    font-size: 2.5rem !important;
-  }
+@media (max-width: 991.98px) {
 }

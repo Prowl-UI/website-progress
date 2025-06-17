@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Show loading state with proper height for mobile
   placeholder.style.minHeight = "100px";
-  placeholder.style.backgroundColor = "#0a0a0a";
+  placeholder.style.backgroundColor = "#f8f9fa"; // Light gray background
   placeholder.style.height = placeholder.style.minHeight;
 
   // Load navbar
@@ -145,30 +145,10 @@ document.addEventListener("DOMContentLoaded", function () {
         dropdowns.forEach((dropdown) => {
           const dropdownMenu = dropdown.querySelector(".dropdown-menu");
           const dropdownToggle = dropdown.querySelector(".dropdown-toggle");
-          let isOpen = false;
 
-          // Hover functionality (existing)
+          // Hover functionality
           dropdown.addEventListener("mouseenter", () => {
-            dropdownMenu.classList.add("show");
-            dropdownMenu.style.display = "block";
-            isOpen = true;
-          });
-
-          dropdown.addEventListener("mouseleave", () => {
-            // Only close on mouse leave if not clicked open
-            if (!dropdown.classList.contains("clicked-open")) {
-              dropdownMenu.classList.remove("show");
-              dropdownMenu.style.display = "none";
-              isOpen = false;
-            }
-          });
-
-          // Click functionality (new)
-          dropdownToggle.addEventListener("click", (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-
-            // Close other dropdowns first
+            // Close all other dropdowns first on hover
             document.querySelectorAll(".dropdown").forEach((otherDropdown) => {
               if (otherDropdown !== dropdown) {
                 otherDropdown.classList.remove("clicked-open");
@@ -180,17 +160,40 @@ document.addEventListener("DOMContentLoaded", function () {
               }
             });
 
-            // Toggle current dropdown
-            if (dropdown.classList.contains("clicked-open")) {
-              dropdown.classList.remove("clicked-open");
+            dropdownMenu.classList.add("show");
+            dropdownMenu.style.display = "block";
+          });
+
+          dropdown.addEventListener("mouseleave", () => {
+            // Only close on mouse leave if not clicked open
+            if (!dropdown.classList.contains("clicked-open")) {
               dropdownMenu.classList.remove("show");
               dropdownMenu.style.display = "none";
-              isOpen = false;
-            } else {
+            }
+          });
+
+          // Click functionality
+          dropdownToggle.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const isCurrentlyOpen = dropdown.classList.contains("clicked-open");
+
+            // Close ALL dropdowns first
+            document.querySelectorAll(".dropdown").forEach((otherDropdown) => {
+              otherDropdown.classList.remove("clicked-open");
+              const otherMenu = otherDropdown.querySelector(".dropdown-menu");
+              if (otherMenu) {
+                otherMenu.classList.remove("show");
+                otherMenu.style.display = "none";
+              }
+            });
+
+            // If this dropdown wasn't open, open it
+            if (!isCurrentlyOpen) {
               dropdown.classList.add("clicked-open");
               dropdownMenu.classList.add("show");
               dropdownMenu.style.display = "block";
-              isOpen = true;
             }
           });
         });
@@ -209,64 +212,355 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         });
       } else {
-        // Mobile dropdown click functionality
-        const dropdownToggleList = [].slice.call(
-          document.querySelectorAll(".dropdown-toggle")
-        );
-        dropdownToggleList.map(function (dropdownToggleEl) {
-          return new bootstrap.Dropdown(dropdownToggleEl);
+        // Mobile dropdown functionality - FINAL CLEAN VERSION
+
+        // Wait for DOM to be fully ready
+        setTimeout(() => {
+          // Handle dropdown toggle clicks
+          const dropdownToggles = document.querySelectorAll(
+            ".nav-link.dropdown-toggle"
+          );
+
+          dropdownToggles.forEach(function (toggle) {
+            // Remove any existing listeners
+            toggle.removeEventListener("click", handleDropdownClick);
+
+            // Add new listener
+            toggle.addEventListener("click", handleDropdownClick);
+            toggle.addEventListener("touchstart", handleDropdownClick);
+          });
+
+          function handleDropdownClick(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+
+            const toggle = e.currentTarget;
+            const parentDropdown = toggle.closest(".nav-item.dropdown");
+            const targetMenu = parentDropdown
+              ? parentDropdown.querySelector(".dropdown-menu")
+              : null;
+
+            if (!targetMenu) {
+              return;
+            }
+
+            const isCurrentlyOpen = targetMenu.classList.contains("show");
+
+            // Close ALL dropdowns first
+            document
+              .querySelectorAll(".dropdown-menu")
+              .forEach(function (menu) {
+                menu.classList.remove("show");
+              });
+
+            // If this one wasn't open, open it
+            if (!isCurrentlyOpen) {
+              targetMenu.classList.add("show");
+
+              // Scroll the clicked dropdown into view with smart positioning
+              setTimeout(() => {
+                const navbarCollapse =
+                  document.querySelector(".navbar-collapse");
+                if (navbarCollapse) {
+                  const toggleRect = toggle.getBoundingClientRect();
+                  const navRect = navbarCollapse.getBoundingClientRect();
+                  const menuHeight = targetMenu.offsetHeight;
+
+                  // Calculate if dropdown content would go below visible area
+                  const togglePosition =
+                    toggleRect.top - navRect.top + navbarCollapse.scrollTop;
+                  const availableSpace =
+                    navRect.height - (toggleRect.top - navRect.top);
+
+                  let scrollTarget;
+
+                  if (menuHeight > availableSpace - 50) {
+                    // If dropdown is too big for remaining space, scroll to show dropdown content
+                    scrollTarget =
+                      togglePosition - (navRect.height - menuHeight - 100);
+                  } else {
+                    // Otherwise, just scroll to show the toggle nicely
+                    scrollTarget = togglePosition - 50;
+                  }
+
+                  // Ensure we don't scroll past the beginning
+                  scrollTarget = Math.max(0, scrollTarget);
+
+                  navbarCollapse.scrollTo({
+                    top: scrollTarget,
+                    behavior: "smooth",
+                  });
+                }
+              }, 100); // Slightly longer delay to ensure dropdown is fully rendered
+            }
+          }
+
+          // Handle dropdown item clicks
+          const dropdownItems = document.querySelectorAll(".dropdown-item");
+
+          dropdownItems.forEach(function (item) {
+            item.addEventListener("click", function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+
+              const href = this.getAttribute("href");
+
+              if (href && href !== "#" && href.trim() !== "") {
+                // Close the mobile menu first
+                const navbarCollapse =
+                  document.querySelector(".navbar-collapse");
+                if (navbarCollapse) {
+                  navbarCollapse.classList.remove("show");
+                }
+
+                // Navigate after a short delay
+                setTimeout(function () {
+                  window.location.href = href;
+                }, 150);
+              }
+            });
+          });
+
+          // Handle regular nav-link clicks (non-dropdown)
+          const regularNavLinks = document.querySelectorAll(
+            ".nav-link:not(.dropdown-toggle)"
+          );
+
+          regularNavLinks.forEach(function (link) {
+            link.addEventListener("click", function (e) {
+              const href = this.getAttribute("href");
+
+              if (href && href !== "#" && href.trim() !== "") {
+                e.preventDefault();
+
+                // Close the mobile menu
+                const navbarCollapse =
+                  document.querySelector(".navbar-collapse");
+                if (navbarCollapse) {
+                  navbarCollapse.classList.remove("show");
+                }
+
+                // Navigate
+                setTimeout(function () {
+                  window.location.href = href;
+                }, 150);
+              }
+            });
+          });
+        }, 500);
+
+        // Handle hamburger menu opening - RESTORED TO WORKING 250MS
+        const hamburgerToggler = document.querySelector(".navbar-toggler");
+        const navbarCollapse = document.querySelector(".navbar-collapse");
+
+        if (hamburgerToggler && navbarCollapse) {
+          // Listen for hamburger click
+          hamburgerToggler.addEventListener("click", function () {
+            setTimeout(() => {
+              if (navbarCollapse.classList.contains("show")) {
+                scrollToActiveItemFast();
+              }
+            }, 50); // Back to working 100ms initial delay
+          });
+
+          // Also listen for Bootstrap's collapse event as backup
+          navbarCollapse.addEventListener("shown.bs.collapse", function () {
+            scrollToActiveItemFast();
+          });
+        }
+
+        // Function to scroll to active nav item - RESTORED TO WORKING TIMING
+        function scrollToActiveItemFast() {
+          // Look for active elements
+          const activeDropdownItem = document.querySelector(
+            ".dropdown-item.active"
+          );
+          const activeNavLink = document.querySelector(
+            ".nav-link.active:not(.dropdown-toggle)"
+          );
+          const activeParentDropdown = document.querySelector(
+            ".nav-link.dropdown-toggle.active"
+          );
+
+          let targetElement = null;
+
+          // Priority 1: Active dropdown item (like "Wildlife Trafficking")
+          if (activeDropdownItem) {
+            const parentDropdown = activeDropdownItem.closest(".dropdown");
+            if (parentDropdown) {
+              const parentMenu = parentDropdown.querySelector(".dropdown-menu");
+
+              if (parentMenu) {
+                // Close other dropdowns and open the correct one
+                document
+                  .querySelectorAll(".dropdown-menu")
+                  .forEach(function (menu) {
+                    if (menu !== parentMenu) {
+                      menu.classList.remove("show");
+                    }
+                  });
+                parentMenu.classList.add("show");
+                targetElement = activeDropdownItem;
+              }
+            }
+          }
+          // Priority 2: Active nav link (like "Gallery")
+          else if (activeNavLink) {
+            targetElement = activeNavLink;
+          }
+          // Priority 3: Active parent dropdown toggle
+          else if (activeParentDropdown) {
+            targetElement = activeParentDropdown;
+          }
+
+          // Scroll to the target element with working timing
+          if (targetElement && navbarCollapse) {
+            setTimeout(() => {
+              try {
+                const targetRect = targetElement.getBoundingClientRect();
+                const navRect = navbarCollapse.getBoundingClientRect();
+                const relativeTop =
+                  targetRect.top - navRect.top + navbarCollapse.scrollTop;
+
+                // Position the active item near the top
+                const scrollTarget = Math.max(0, relativeTop - 80);
+
+                // Smooth scroll with working timing
+                navbarCollapse.scrollTo({
+                  top: scrollTarget,
+                  behavior: "smooth",
+                });
+              } catch (error) {
+                console.error("Scroll error:", error);
+              }
+            }, 50); // Back to working 150ms scroll delay
+          }
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener("click", function (e) {
+          if (!e.target.closest(".navbar")) {
+            document
+              .querySelectorAll(".dropdown-menu")
+              .forEach(function (menu) {
+                menu.classList.remove("show");
+              });
+          }
         });
       }
 
-      // Set active link based on current page
+      // Set active link based on current page - FINAL FIX
       const currentPage =
         window.location.pathname.split("/").pop() || "index.html";
+      const currentHash = window.location.hash;
       const navLinks = document.querySelectorAll(".nav-link");
       const dropdownItems = document.querySelectorAll(".dropdown-item");
 
-      // Handle main nav links
+      console.log("🔍 Current page detected:", currentPage);
+      console.log("🔍 Current hash:", currentHash);
+
+      // Remove all existing active classes first
+      navLinks.forEach((link) => link.classList.remove("active"));
+      dropdownItems.forEach((item) => item.classList.remove("active"));
+
+      // Handle main nav links (Gallery, Expression of Interest, etc.)
+      // EXCLUDE dropdown toggles which have href="#" or empty href
       navLinks.forEach((link) => {
         const href = link.getAttribute("href");
-        if (
-          href === currentPage ||
-          (currentPage === "" && href === "index.html")
-        ) {
-          link.classList.add("active");
+        const isDropdownToggle = link.classList.contains("dropdown-toggle");
+
+        if (href && !isDropdownToggle) {
+          const linkPage = href.split("/").pop().split("#")[0];
+          console.log("🔗 Nav link check:", linkPage, "vs", currentPage);
+
+          // Exact match only for non-dropdown nav links
+          if (linkPage === currentPage) {
+            link.classList.add("active");
+            console.log("✅ Set nav link active:", link.textContent.trim());
+          }
         }
       });
 
-      // Handle dropdown items and show parent dropdown if active
+      // Handle dropdown items - INCLUDE HASH CHECKING
+      let activeItemsFound = 0;
       dropdownItems.forEach((item) => {
         const href = item.getAttribute("href");
-        if (href === currentPage) {
-          item.classList.add("active");
+        if (href) {
+          const fullHref = href.split("/").pop(); // Keep the full part including hash
+          const linkPage = fullHref.split("#")[0];
+          const linkHash = fullHref.includes("#")
+            ? "#" + fullHref.split("#")[1]
+            : "";
 
-          // Find the parent dropdown and mark it as active
-          const parentDropdown = item.closest(".dropdown");
-          if (parentDropdown) {
-            const dropdownToggle = parentDropdown.querySelector(
-              ".nav-link.dropdown-toggle"
+          console.log(
+            "🔗 Dropdown item check:",
+            fullHref,
+            "vs",
+            currentPage + currentHash
+          );
+
+          // Check for exact match including hash fragments
+          let isMatch = false;
+
+          if (linkHash && currentHash) {
+            // Both have hash - must match exactly
+            isMatch = linkPage === currentPage && linkHash === currentHash;
+          } else if (!linkHash && !currentHash) {
+            // Neither has hash - match page only
+            isMatch =
+              linkPage === currentPage && linkPage !== "" && linkPage !== "#";
+          } else if (
+            linkPage === currentPage &&
+            linkPage === "index.html" &&
+            !linkHash &&
+            !currentHash
+          ) {
+            // Special case for main index.html page (no hash)
+            isMatch = true;
+          }
+
+          if (isMatch) {
+            activeItemsFound++;
+            item.classList.add("active");
+            console.log(
+              "✅ Set dropdown item active:",
+              item.textContent.trim()
             );
-            if (dropdownToggle) {
-              dropdownToggle.classList.add("active");
-            }
 
-            // On mobile, automatically show the dropdown if it contains active item
-            if (window.innerWidth <= 991) {
-              const dropdownMenu =
-                parentDropdown.querySelector(".dropdown-menu");
-              if (dropdownMenu) {
-                dropdownMenu.classList.add("show");
+            // Find the parent dropdown and mark it as active
+            const parentDropdown = item.closest(".dropdown");
+            if (parentDropdown) {
+              const dropdownToggle = parentDropdown.querySelector(
+                ".nav-link.dropdown-toggle"
+              );
+              if (dropdownToggle) {
+                dropdownToggle.classList.add("active");
+                console.log(
+                  "✅ Set parent dropdown active:",
+                  dropdownToggle.textContent.trim()
+                );
+              }
+
+              // On mobile, automatically show the dropdown if it contains active item
+              if (window.innerWidth <= 991) {
+                const dropdownMenu =
+                  parentDropdown.querySelector(".dropdown-menu");
+                if (dropdownMenu) {
+                  dropdownMenu.classList.add("show");
+                  console.log("📱 Auto-opened dropdown on mobile");
+                }
               }
             }
           }
         }
       });
+
+      console.log("📊 Total active items found:", activeItemsFound);
     })
     .catch((error) => {
       console.error("Error loading navbar:", error);
       placeholder.innerHTML =
-        '<div style="padding: 1rem; color: var(--white);">Navigation loading failed</div>';
+        '<div style="padding: 1rem; color: #333;">Navigation loading failed</div>';
     });
 
   // Initialize photo gallery functionality
@@ -274,6 +568,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Initialize hero slider
   setTimeout(() => {
-    new HeroSlider();
+    // Only initialize slider if the slider elements exist (homepage only)
+    if (document.getElementById("sliderTrack")) {
+      new HeroSlider();
+    }
   }, 100);
 });
