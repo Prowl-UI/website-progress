@@ -626,9 +626,63 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         }
 
-        // Close dropdowns when clicking outside
+        // Close dropdowns and mobile menu when clicking/touching outside
+        const outsideTouchTracker = new TouchTracker();
+
+        // Handle touch events for closing menu on outside touch
+        document.addEventListener(
+          "touchstart",
+          function (e) {
+            if (window.innerWidth <= 991) {
+              outsideTouchTracker.handleStart(e);
+            }
+          },
+          { passive: true }
+        );
+
+        document.addEventListener(
+          "touchmove",
+          function (e) {
+            if (window.innerWidth <= 991) {
+              outsideTouchTracker.handleMove(e);
+            }
+          },
+          { passive: true }
+        );
+
+        document.addEventListener("touchend", function (e) {
+          if (window.innerWidth <= 991) {
+            const touchResult = outsideTouchTracker.handleEnd();
+
+            // Only close menu if it was a clear tap (not scrolling)
+            if (touchResult.isTap && !e.target.closest(".navbar")) {
+              const navbarCollapse = document.querySelector(".navbar-collapse");
+              if (navbarCollapse && navbarCollapse.classList.contains("show")) {
+                // Close the mobile menu
+                navbarCollapse.classList.remove("show");
+
+                // Also close any open dropdowns
+                document
+                  .querySelectorAll(".dropdown-menu")
+                  .forEach(function (menu) {
+                    menu.classList.remove("show");
+                  });
+              }
+            }
+          }
+        });
+
+        // Fallback click handler for desktop and other cases
         document.addEventListener("click", function (e) {
           if (!e.target.closest(".navbar")) {
+            const navbarCollapse = document.querySelector(".navbar-collapse");
+
+            // Close mobile menu if open
+            if (navbarCollapse && navbarCollapse.classList.contains("show")) {
+              navbarCollapse.classList.remove("show");
+            }
+
+            // Close dropdown menus
             document
               .querySelectorAll(".dropdown-menu")
               .forEach(function (menu) {
