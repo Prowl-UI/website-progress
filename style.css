@@ -5,7 +5,7 @@
   --green-hover: #45a049;
   --navbar-black: #1a1a1a;
   --white: #ffffff;
-  --off-white: #d3d3d3;
+  --off-white: rgb(230, 230, 230);
   --text-dark: #333;
   --text-muted: #bfc3c7;
   --dark-bg: #0a0a0a;
@@ -126,7 +126,7 @@ body {
 }
 
 .hero-modern {
-  background: var(--primary-green);
+  background: linear-gradient(135deg, var(--primary-green), var(--primary-red));
   color: var(--white);
   min-height: 75vh;
   display: flex;
@@ -152,13 +152,13 @@ body {
 
 .slider-track {
   display: flex;
-  width: 500%; /* 5 slides × 100% */
+  width: 400%; /* Changed from 500% to 400% (4 slides × 100%) */
   height: 100%;
   transition: transform 0.5s ease-in-out;
 }
 
 .slide {
-  width: 20%; /* 100% ÷ 5 slides */
+  width: 25%; /* Changed from 20% to 25% (100% ÷ 4 slides) */
   height: 100%;
   position: relative;
   flex-shrink: 0;
