@@ -1,8 +1,9 @@
 // Hero Slider Class
+// Hero Slider Class
 class HeroSlider {
   constructor() {
     this.currentSlide = 0;
-    this.totalSlides = 4;
+    this.totalSlides = 6; // Changed from 4 to 6
     this.sliderTrack = document.getElementById("sliderTrack");
     this.indicators = document.querySelectorAll(".indicator");
     this.prevBtn = document.getElementById("prevBtn");
@@ -40,7 +41,7 @@ class HeroSlider {
 
   goToSlide(slideIndex) {
     this.currentSlide = slideIndex;
-    const translateX = -slideIndex * 25; // 20% per slide
+    const translateX = -slideIndex * 16.666; // Changed from 25% to 16.666% per slide (100% ÷ 6)
     this.sliderTrack.style.transform = `translateX(${translateX}%)`;
 
     // Update indicators
