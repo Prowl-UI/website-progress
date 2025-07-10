@@ -1,9 +1,7 @@
-// Hero Slider Class
-// Hero Slider Class
 class HeroSlider {
   constructor() {
     this.currentSlide = 0;
-    this.totalSlides = 6; // Changed from 4 to 6
+    this.totalSlides = 6;
     this.sliderTrack = document.getElementById("sliderTrack");
     this.indicators = document.querySelectorAll(".indicator");
     this.prevBtn = document.getElementById("prevBtn");
@@ -14,19 +12,15 @@ class HeroSlider {
   }
 
   init() {
-    // Add event listeners
     this.prevBtn?.addEventListener("click", () => this.prevSlide());
     this.nextBtn?.addEventListener("click", () => this.nextSlide());
 
-    // Indicator click events
     this.indicators.forEach((indicator, index) => {
       indicator.addEventListener("click", () => this.goToSlide(index));
     });
 
-    // Start auto-slide
     this.startAutoSlide();
 
-    // Pause auto-slide on hover
     const sliderContainer = document.querySelector(".slider-container");
     if (sliderContainer) {
       sliderContainer.addEventListener("mouseenter", () =>
@@ -41,10 +35,9 @@ class HeroSlider {
 
   goToSlide(slideIndex) {
     this.currentSlide = slideIndex;
-    const translateX = -slideIndex * 16.666; // Changed from 25% to 16.666% per slide (100% ÷ 6)
+    const translateX = -slideIndex * 16.666;
     this.sliderTrack.style.transform = `translateX(${translateX}%)`;
 
-    // Update indicators
     this.indicators.forEach((indicator, index) => {
       indicator.classList.toggle("active", index === slideIndex);
     });
@@ -64,7 +57,7 @@ class HeroSlider {
   startAutoSlide() {
     this.autoSlideInterval = setInterval(() => {
       this.nextSlide();
-    }, 6000); // Change slide every 6 seconds
+    }, 6000);
   }
 
   pauseAutoSlide() {
@@ -87,7 +80,6 @@ class HeroSlider {
       const diff = startX - endX;
 
       if (Math.abs(diff) > 50) {
-        // Minimum swipe distance
         if (diff > 0) {
           this.nextSlide();
         } else {
@@ -98,7 +90,6 @@ class HeroSlider {
   }
 }
 
-// Touch tracking for mobile navigation
 class TouchTracker {
   constructor() {
     this.reset();
@@ -128,11 +119,9 @@ class TouchTracker {
     const deltaY = Math.abs(currentY - this.startY);
     const deltaX = Math.abs(currentX - this.startX);
 
-    // If user moved more than 10px in any direction, consider it movement
     if (deltaY > 10 || deltaX > 10) {
       this.touchMoved = true;
 
-      // If vertical movement is greater than horizontal, it's likely scrolling
       if (deltaY > deltaX && deltaY > 15) {
         this.isScrolling = true;
       }
@@ -142,10 +131,6 @@ class TouchTracker {
   handleEnd() {
     const touchDuration = Date.now() - this.startTime;
 
-    // Consider it a tap only if:
-    // 1. Touch duration is short (< 300ms)
-    // 2. No significant movement occurred
-    // 3. Not identified as scrolling
     const isTap = touchDuration < 300 && !this.touchMoved && !this.isScrolling;
 
     const result = {
@@ -160,7 +145,6 @@ class TouchTracker {
   }
 }
 
-// Navigation Manager Class
 class NavigationManager {
   constructor() {
     this.touchTracker = new TouchTracker();
@@ -176,7 +160,6 @@ class NavigationManager {
       const dropdownMenu = dropdown.querySelector(".dropdown-menu");
       const dropdownToggle = dropdown.querySelector(".dropdown-toggle");
 
-      // Hover functionality
       dropdown.addEventListener("mouseenter", () => {
         this.closeAllDropdowns(dropdown);
         dropdownMenu.classList.add("show");
@@ -190,7 +173,6 @@ class NavigationManager {
         }
       });
 
-      // Click functionality
       dropdownToggle.addEventListener("click", (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -206,7 +188,6 @@ class NavigationManager {
       });
     });
 
-    // Close dropdowns when clicking outside
     document.addEventListener("click", (e) => {
       if (!e.target.closest(".dropdown")) {
         this.closeAllDropdowns();
@@ -230,13 +211,11 @@ class NavigationManager {
     );
 
     dropdownToggles.forEach((toggle) => {
-      // Remove existing listeners
       toggle.removeEventListener("click", this.handleDropdownClick);
       toggle.removeEventListener("touchstart", this.handleDropdownTouchStart);
       toggle.removeEventListener("touchmove", this.handleDropdownTouchMove);
       toggle.removeEventListener("touchend", this.handleDropdownTouchEnd);
 
-      // Add new listeners
       toggle.addEventListener(
         "touchstart",
         (e) => this.handleDropdownTouchStart(e),
@@ -325,7 +304,6 @@ class NavigationManager {
   }
 
   setupOutsideTouchClose() {
-    // Handle touch events for closing menu on outside touch
     document.addEventListener(
       "touchstart",
       (e) => {
@@ -356,7 +334,6 @@ class NavigationManager {
       }
     });
 
-    // Fallback click handler
     document.addEventListener("click", (e) => {
       if (!e.target.closest(".navbar")) {
         this.closeMobileMenu();
@@ -415,12 +392,10 @@ class NavigationManager {
 
     const isCurrentlyOpen = targetMenu.classList.contains("show");
 
-    // Close all dropdowns first
     document.querySelectorAll(".dropdown-menu").forEach((menu) => {
       menu.classList.remove("show");
     });
 
-    // Open this dropdown if it wasn't open
     if (!isCurrentlyOpen) {
       targetMenu.classList.add("show");
       this.scrollDropdownIntoView(toggle, targetMenu);
@@ -475,8 +450,6 @@ class NavigationManager {
   scrollToActiveItem() {
     const navbarCollapse = document.querySelector(".navbar-collapse");
     if (!navbarCollapse) return;
-
-    // Look for active elements in priority order
     const activeDropdownItem = document.querySelector(".dropdown-item.active");
     const activeNavLink = document.querySelector(
       ".nav-link.active:not(.dropdown-toggle)"
@@ -492,7 +465,6 @@ class NavigationManager {
       const parentMenu = parentDropdown?.querySelector(".dropdown-menu");
 
       if (parentMenu) {
-        // Close other dropdowns and open the correct one
         document.querySelectorAll(".dropdown-menu").forEach((menu) => {
           if (menu !== parentMenu) {
             menu.classList.remove("show");
@@ -559,11 +531,9 @@ class NavigationManager {
     const navLinks = document.querySelectorAll(".nav-link");
     const dropdownItems = document.querySelectorAll(".dropdown-item");
 
-    // Remove all existing active classes
     navLinks.forEach((link) => link.classList.remove("active"));
     dropdownItems.forEach((item) => item.classList.remove("active"));
 
-    // Set active main nav links (exclude dropdown toggles)
     navLinks.forEach((link) => {
       const href = link.getAttribute("href");
       const isDropdownToggle = link.classList.contains("dropdown-toggle");
@@ -577,7 +547,6 @@ class NavigationManager {
       }
     });
 
-    // Set active dropdown items with hash checking
     dropdownItems.forEach((item) => {
       const href = item.getAttribute("href");
       if (!href) return;
@@ -591,10 +560,8 @@ class NavigationManager {
       let isMatch = false;
 
       if (linkHash && currentHash) {
-        // Both have hash - must match exactly
         isMatch = linkPage === currentPage && linkHash === currentHash;
       } else if (!linkHash && !currentHash) {
-        // Neither has hash - match page only
         isMatch =
           linkPage === currentPage && linkPage !== "" && linkPage !== "#";
       } else if (
@@ -603,14 +570,11 @@ class NavigationManager {
         !linkHash &&
         !currentHash
       ) {
-        // Special case for main index.html page
         isMatch = true;
       }
 
       if (isMatch) {
         item.classList.add("active");
-
-        // Find and mark parent dropdown as active
         const parentDropdown = item.closest(".dropdown");
         const dropdownToggle = parentDropdown?.querySelector(
           ".nav-link.dropdown-toggle"
@@ -619,8 +583,6 @@ class NavigationManager {
         if (dropdownToggle) {
           dropdownToggle.classList.add("active");
         }
-
-        // Auto-open dropdown on mobile if it contains active item
         if (window.innerWidth <= 991) {
           const dropdownMenu = parentDropdown?.querySelector(".dropdown-menu");
           if (dropdownMenu) {
@@ -631,23 +593,18 @@ class NavigationManager {
     });
   }
 }
-
-// Main initialization
 document.addEventListener("DOMContentLoaded", function () {
   const placeholder = document.getElementById("navbar-placeholder");
 
-  // Show loading state
   placeholder.style.minHeight = "100px";
   placeholder.style.backgroundColor = "#f8f9fa";
   placeholder.style.height = placeholder.style.minHeight;
 
-  // Load navbar
   fetch("navbar.html")
     .then((response) => response.text())
     .then((html) => {
       placeholder.innerHTML = html;
 
-      // Add custom hamburger middle line
       const hamburgerButton = document.querySelector(".navbar-toggler");
       if (hamburgerButton) {
         const middleLine = document.createElement("span");
@@ -655,7 +612,6 @@ document.addEventListener("DOMContentLoaded", function () {
         hamburgerButton.appendChild(middleLine);
       }
 
-      // Initialize navigation
       const navManager = new NavigationManager();
 
       if (window.innerWidth >= 992) {
@@ -663,8 +619,6 @@ document.addEventListener("DOMContentLoaded", function () {
       } else {
         navManager.initializeMobileNavigation();
       }
-
-      // Set active links
       navManager.setActiveLinks();
     })
     .catch((error) => {
@@ -673,7 +627,6 @@ document.addEventListener("DOMContentLoaded", function () {
         '<div style="padding: 1rem; color: #333;">Navigation loading failed</div>';
     });
 
-  // Initialize hero slider if present
   setTimeout(() => {
     if (document.getElementById("sliderTrack")) {
       new HeroSlider();
@@ -681,7 +634,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }, 100);
 });
 
-// Gallery filter functionality
 document.addEventListener("DOMContentLoaded", function () {
   const filterButtons = document.querySelectorAll(".filter-btn");
   const galleryItems = document.querySelectorAll(".gallery-item");
@@ -690,11 +642,9 @@ document.addEventListener("DOMContentLoaded", function () {
     button.addEventListener("click", function () {
       const category = this.getAttribute("data-category");
 
-      // Update active button
       filterButtons.forEach((btn) => btn.classList.remove("active"));
       this.classList.add("active");
 
-      // Filter gallery items
       galleryItems.forEach((item) => {
         if (
           category === "all" ||
@@ -716,7 +666,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // Add transition styles to gallery items
   galleryItems.forEach((item) => {
     item.style.transition = "opacity 0.3s ease, transform 0.3s ease";
   });

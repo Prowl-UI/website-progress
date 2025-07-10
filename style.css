@@ -23,7 +23,6 @@ body {
   padding-top: 140px;
 }
 
-/* Welcome Hero Section */
 .welcome-hero {
   background: var(--white);
   color: var(--text-dark);
@@ -91,7 +90,6 @@ body {
   border-color: var(--primary-green);
 }
 
-/* Responsive adjustments for welcome hero */
 @media (max-width: 768px) {
   .welcome-hero {
     padding: 3rem 0;
@@ -153,7 +151,7 @@ body {
 
 .slider-track {
   display: flex;
-  width: 600%; /* Changed from 400% to 600% (6 slides × 100%) */
+  width: 600%;
   height: 100%;
   transition: transform 0.5s ease-in-out;
 }
@@ -202,7 +200,6 @@ body {
   margin: 0;
 }
 
-/* Remove hero overlay and content for clean image display */
 .slide-overlay {
   display: none;
 }
@@ -211,7 +208,6 @@ body {
   display: none;
 }
 
-/* Navigation Buttons */
 .slider-btn {
   position: absolute;
   top: 50%;
@@ -243,7 +239,6 @@ body {
   right: 20px;
 }
 
-/* Slide Indicators */
 .slider-indicators {
   position: absolute;
   bottom: 30px;
@@ -297,7 +292,6 @@ body {
   -webkit-transform: translateZ(0) scale(1.2) !important;
 }
 
-/* Notices Section Styles */
 .notices-section {
   background: var(--red-hover);
   color: var(--white);
@@ -378,7 +372,6 @@ body {
   font-weight: 500;
 }
 
-/* Responsive adjustments for notices */
 @media (max-width: 768px) {
   .notices-section {
     padding: 2.5rem 0;
@@ -516,7 +509,6 @@ body {
   opacity: 1;
 }
 
-/* Photos Section Styles */
 .photo-gallery {
   padding: 4rem 0;
   background: var(--light-bg);
@@ -591,7 +583,6 @@ body {
   height: 400px;
 }
 
-/* News Section Styles */
 .news-section {
   padding: 4rem 0;
   background: var(--white);
@@ -681,7 +672,6 @@ body {
   line-height: 1.6;
 }
 
-/* Content section */
 .content {
   padding: 3rem 0;
   background-color: var(--light-bg);
@@ -693,7 +683,6 @@ body {
   color: var(--text-dark);
 }
 
-/* Footer */
 footer {
   background-color: var(--dark-bg);
   color: var(--white);
@@ -702,7 +691,6 @@ footer {
   margin-top: 0;
 }
 
-/* Kenya Color Scheme for Cards and Elements */
 .card-header.bg-success,
 .bg-success {
   background-color: var(--primary-green) !important;
@@ -734,7 +722,6 @@ footer {
   background-color: var(--primary-red) !important;
 }
 
-/* Text colors matching Kenya theme */
 .text-success {
   color: var(--primary-green) !important;
 }
@@ -759,7 +746,6 @@ footer {
   color: var(--text-dark) !important;
 }
 
-/* Button colors */
 .btn-success {
   background-color: var(--primary-green);
   border-color: var(--primary-green);
@@ -823,7 +809,6 @@ footer {
   color: var(--text-dark);
 }
 
-/* Alert colors */
 .alert-success {
   background-color: var(--green-transparent);
   border-color: var(--primary-green);
@@ -848,7 +833,6 @@ footer {
   color: var(--primary-green);
 }
 
-/* Badge colors */
 .badge.bg-success {
   background-color: var(--primary-green) !important;
 }
@@ -874,7 +858,6 @@ footer {
   background-color: var(--text-dark) !important;
 }
 
-/* Border colors */
 .border-success {
   border-color: var(--primary-green) !important;
 }
@@ -899,7 +882,6 @@ footer {
   border-color: var(--text-dark) !important;
 }
 
-/* Navbar placeholder styling */
 #navbar-placeholder {
   position: fixed;
   top: 0;
@@ -910,7 +892,6 @@ footer {
   min-height: 100px;
 }
 
-/* Responsive body padding adjustments */
 @media (max-width: 991.98px) {
   body {
     padding-top: 100px;
@@ -934,7 +915,6 @@ footer {
   }
 }
 
-/* Navbar inside placeholder styling */
 #navbar-placeholder .navbar {
   background-color: var(--light-bg) !important;
   min-height: inherit;
@@ -950,7 +930,6 @@ footer {
   background-color: var(--light-bg) !important;
 }
 
-/* Hamburger menu styling */
 .navbar-toggler {
   position: absolute !important;
   top: 50% !important;
@@ -971,19 +950,14 @@ footer {
   gap: 6px !important;
 }
 
-/* Hide hamburger on desktop */
 @media (min-width: 992px) {
   .navbar-toggler {
     display: none !important;
   }
 }
-
-/* Hide Bootstrap's default hamburger icon */
 .navbar-toggler .navbar-toggler-icon {
   display: none !important;
 }
-
-/* Create custom hamburger lines with Kenya flag colors */
 .navbar-toggler::before,
 .navbar-toggler::after {
   content: "" !important;
@@ -992,18 +966,14 @@ footer {
   border-radius: 2px !important;
   display: block !important;
 }
-
-/* Top line - Red */
 .navbar-toggler::before {
   background-color: var(--primary-red) !important;
 }
 
-/* Bottom line - Green */
 .navbar-toggler::after {
   background-color: var(--primary-green) !important;
 }
 
-/* Middle line - Black */
 .navbar-toggler .hamburger-middle {
   width: 35px !important;
   height: 4px !important;
@@ -1011,8 +981,6 @@ footer {
   border-radius: 2px !important;
   display: block !important;
 }
-
-/* Adjust positioning for each screen size */
 @media (max-width: 991.98px) {
   .navbar-toggler {
     top: -45px !important;
@@ -1040,8 +1008,6 @@ footer {
     right: 20px !important;
   }
 }
-
-/* Responsive navbar height adjustments */
 @media (max-width: 991.98px) {
   .navbar {
     min-height: 100px;
@@ -1070,7 +1036,6 @@ footer {
   }
 }
 
-/* Navbar styling */
 .navbar {
   background-color: var(--light-bg) !important;
   transition: all 0.3s ease;
@@ -1139,7 +1104,6 @@ footer {
   min-width: max-content;
 }
 
-/* Responsive font sizes for nav links */
 @media (max-width: 1300px) {
   .nav-link {
     font-size: 0.85rem;
@@ -1205,7 +1169,6 @@ footer {
   font-weight: 600;
 }
 
-/* Desktop dropdown hover functionality */
 @media (min-width: 992px) {
   .dropdown:hover .dropdown-menu {
     display: block !important;
@@ -1222,7 +1185,6 @@ footer {
   }
 }
 
-/* Mobile dropdown functionality */
 @media (max-width: 991.98px) {
   .dropdown-menu {
     margin-top: 0.25rem;
@@ -1243,7 +1205,6 @@ footer {
   }
 }
 
-/* Mobile navbar brand positioning */
 @media (max-width: 991.98px) {
   .navbar-brand-wrapper {
     justify-content: flex-start;
@@ -1420,7 +1381,6 @@ footer {
   }
 }
 
-/* Staff Photo Placeholder Styles */
 .staff-photo-placeholder {
   background: #f8f9fa;
   border: 2px dashed #dee2e6;
