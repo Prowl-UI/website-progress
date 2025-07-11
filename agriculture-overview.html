@@ -3,9 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Agriculture</title>
+    <title>Agriculture Overview - Embassy of Kenya</title>
+    <meta
+      name="description"
+      content="Discover Kenya's agricultural excellence including coffee, tea, horticulture, floriculture, and other agricultural products. Kenya's agriculture contributes 26% to GDP."
+    />
+    <meta
+      name="keywords"
+      content="Kenya agriculture, Kenya coffee, Kenya tea, horticulture, floriculture, macadamia nuts, pyrethrum, dairy industry"
+    />
+    <link rel="icon" type="image/png" href="/Assets/favicon.png" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
@@ -13,133 +26,90 @@
   <body>
     <div id="navbar-placeholder"></div>
 
-    <main class="container py-5">
-      <div class="row">
-        <div class="col-12">
-          <h1 class="mb-4">Agriculture in Kenya</h1>
-
-          <div class="content-text">
-            <!-- Introduction Section -->
-            <div class="row mb-5">
-              <div class="col-lg-8">
-                <p class="lead">
-                  Agriculture plays a pivotal role in Kenya's economic
-                  development as evidenced by its 26% direct contribution to the
-                  Gross Domestic Product (GDP) and 27% indirect contribution to
-                  the GDP through linkages with other sectors.
-                </p>
-                <p>
-                  The sector is also a major source of livelihood through its
-                  employment of more than 40% of the total population and more
-                  than 70% of Kenya's rural people. The sector has continued to
-                  grow at almost 5% per annum and has a huge potential for
-                  further growth.
-                </p>
-              </div>
-              <div class="col-lg-4">
-                <div class="card bg-success text-white">
-                  <div class="card-body text-center">
-                    <h3 class="h4 mb-2">Key Exports</h3>
-                    <p class="small mb-0">
-                      Horticulture, Coffee, Tea, Pulses, Pyrethrum Extract, and
-                      Sisal Products account for over 90% of agricultural
-                      exports
-                    </p>
-                  </div>
-                </div>
-              </div>
+    <!-- Hero Section -->
+    <!-- <section class="hero-modern">
+      <div class="container">
+        <div class="row justify-content-center text-center">
+          <div class="col-lg-10">
+            <h1 class="display-3 fw-bold mb-4">Agriculture in Kenya</h1>
+            <p class="lead mb-4">
+              Agriculture plays a pivotal role in Kenya's economic development,
+              contributing 26% directly to GDP and 27% indirectly through
+              linkages with other sectors.
+            </p>
+            <div class="d-flex gap-3 justify-content-center flex-wrap">
+              <a href="#overview" class="btn btn-light btn-lg px-4">
+                <i class="fas fa-seedling me-2"></i>Learn More
+              </a>
+              <a href="#products" class="btn btn-outline-light btn-lg px-4">
+                <i class="fas fa-leaf me-2"></i>Our Products
+              </a>
             </div>
+          </div>
+        </div>
+      </div>
+    </section> -->
 
-            <!-- Sector Statistics -->
-            <section class="mb-5">
-              <div class="row text-center">
-                <div class="col-lg-3 col-md-6 mb-4">
-                  <div class="card h-100 border-success">
-                    <div class="card-body">
-                      <i class="fas fa-chart-pie fa-3x text-success mb-3"></i>
-                      <h3 class="h2 text-success">26%</h3>
-                      <p class="text-muted mb-0">Direct GDP Contribution</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                  <div
-                    class="card h-100"
-                    style="border-color: var(--primary-red)"
-                  >
-                    <div class="card-body">
-                      <i
-                        class="fas fa-users fa-3x mb-3"
-                        style="color: var(--primary-red)"
-                      ></i>
-                      <h3 class="h2" style="color: var(--primary-red)">40%</h3>
-                      <p class="text-muted mb-0">Total Population Employed</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                  <div class="card h-100 border-warning">
-                    <div class="card-body">
-                      <i class="fas fa-home fa-3x text-warning mb-3"></i>
-                      <h3 class="h2 text-warning">70%</h3>
-                      <p class="text-muted mb-0">Rural Population Employed</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                  <div
-                    class="card h-100"
-                    style="border-color: var(--text-dark)"
-                  >
-                    <div class="card-body">
-                      <i
-                        class="fas fa-chart-line fa-3x mb-3"
-                        style="color: var(--text-dark)"
-                      ></i>
-                      <h3 class="h2" style="color: var(--text-dark)">5%</h3>
-                      <p class="text-muted mb-0">Annual Growth Rate</p>
-                    </div>
-                  </div>
+    <!-- Overview Section -->
+    <section id="overview" class="py-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h2 class="display-5 fw-bold mb-4 text-center">
+              Agricultural Overview
+            </h2>
+
+            <div class="content-text">
+              <div class="row mb-5">
+                <div class="col-lg-8 mx-auto">
+                  <p class="lead text-center mb-5">
+                    Agriculture is a major source of livelihood, employing more
+                    than
+                    <strong>40% of the total population</strong> and more than
+                    <strong>70% of Kenya's rural population</strong>. The sector
+                    continues to grow at almost
+                    <strong>5% per annum</strong> with huge potential for
+                    further growth.
+                  </p>
                 </div>
               </div>
-            </section>
 
-            <!-- Agricultural Sectors Overview -->
-            <section class="mb-5">
-              <h2 class="h3 mb-4">Major Agricultural Sectors</h2>
-              <div class="row g-4">
-                <div class="col-lg-4 col-md-6">
+              <div class="row mb-5">
+                <div class="col-lg-6 mb-4">
                   <div class="card h-100 border-success">
                     <div class="card-header bg-success text-white">
                       <h3 class="h5 mb-0">
-                        <i class="fas fa-leaf me-2"></i>Tea & Coffee
+                        <i class="fas fa-chart-line me-2"></i>Economic Impact
                       </h3>
                     </div>
                     <div class="card-body">
-                      <p class="small">
-                        Kenya is the world's largest tea exporter and produces
-                        premium Arabica coffee renowned globally for its quality
-                        and unique flavor profile.
-                      </p>
-                      <ul class="list-unstyled small">
+                      <ul class="list-unstyled">
                         <li>
-                          <i class="fas fa-check text-success me-2"></i>Third
-                          largest tea producer globally
+                          <i class="fas fa-percentage text-success me-2"></i>
+                          26% direct contribution to GDP
                         </li>
                         <li>
-                          <i class="fas fa-check text-success me-2"></i>100%
-                          Mild Arabica coffee
+                          <i class="fas fa-link text-success me-2"></i>
+                          27% indirect contribution through sector linkages
                         </li>
                         <li>
-                          <i class="fas fa-check text-success me-2"></i>Premium
-                          specialty markets
+                          <i class="fas fa-users text-success me-2"></i>
+                          Employs 40%+ of total population
+                        </li>
+                        <li>
+                          <i class="fas fa-home text-success me-2"></i>
+                          Supports 70%+ of rural population
+                        </li>
+                        <li>
+                          <i class="fas fa-trending-up text-success me-2"></i>
+                          Growing at 5% annually
                         </li>
                       </ul>
                     </div>
                   </div>
                 </div>
 
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-6 mb-4">
                   <div
                     class="card h-100"
                     style="border-color: var(--primary-red)"
@@ -149,155 +119,603 @@
                       style="background-color: var(--primary-red); color: white"
                     >
                       <h3 class="h5 mb-0">
-                        <i class="fas fa-seedling me-2"></i>Horticulture
+                        <i class="fas fa-globe me-2"></i>Export Products
                       </h3>
                     </div>
                     <div class="card-body">
-                      <p class="small">
-                        Leading exporter of cut flowers, fruits, and vegetables
-                        to Europe and other international markets with
-                        year-round production capability.
-                      </p>
-                      <ul class="list-unstyled small">
+                      <ul class="list-unstyled">
                         <li>
-                          <i
-                            class="fas fa-check me-2"
-                            style="color: var(--primary-red)"
-                          ></i
-                          >Third largest flower exporter
+                          <i class="fas fa-flower-tulip text-danger me-2"></i>
+                          Horticulture and floriculture (cut flowers, fruits,
+                          vegetables)
                         </li>
                         <li>
-                          <i
-                            class="fas fa-check me-2"
-                            style="color: var(--primary-red)"
-                          ></i
-                          >Premium vegetables & herbs
+                          <i class="fas fa-coffee text-danger me-2"></i>
+                          Coffee and tea
                         </li>
                         <li>
-                          <i
-                            class="fas fa-check me-2"
-                            style="color: var(--primary-red)"
-                          ></i
-                          >Year-round production
+                          <i class="fas fa-seedling text-danger me-2"></i>
+                          Herbs, spices and nuts
+                        </li>
+                        <li>
+                          <i class="fas fa-leaf text-danger me-2"></i>
+                          Pyrethrum extract and sisal products
+                        </li>
+                        <li>
+                          <i class="fas fa-apple-alt text-danger me-2"></i>
+                          Pulses and other agricultural products
                         </li>
                       </ul>
                     </div>
                   </div>
                 </div>
+              </div>
 
-                <div class="col-lg-4 col-md-6">
-                  <div class="card h-100 border-warning">
-                    <div class="card-header bg-warning text-dark">
-                      <h3 class="h5 mb-0">
-                        <i class="fas fa-cow me-2"></i>Livestock
-                      </h3>
-                    </div>
+              <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">
+                  <i class="fas fa-star me-2"></i>Leading Export Products
+                </h4>
+                <p class="mb-0">
+                  Over <strong>90% of agricultural exports</strong> include
+                  horticulture, floriculture, coffee, tea, pulses, pyrethrum
+                  extract, and sisal products - positioning Kenya as a key
+                  agricultural producer in the region.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Coffee Industry Section -->
+    <section id="coffee" class="py-5 bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h2
+              class="display-5 fw-bold mb-4 text-center"
+              style="color: var(--primary-red)"
+            >
+              <i class="fas fa-coffee me-3"></i>Kenya Coffee Industry
+            </h2>
+
+            <div class="content-text">
+              <div class="row mb-4">
+                <div class="col-lg-8 mx-auto text-center">
+                  <h3 class="h4 mb-3" style="color: var(--primary-green)">
+                    100% Mild Arabica Coffee - A Specialty Producer
+                  </h3>
+                  <p class="lead">
+                    Kenya's coffee has cut a niche for itself in the
+                    international arena as the fourth largest foreign exchange
+                    earner after tea, tourism and horticulture.
+                  </p>
+                </div>
+              </div>
+
+              <div class="row mb-5">
+                <div class="col-lg-6 mb-4">
+                  <div class="card h-100">
                     <div class="card-body">
-                      <p class="small">
-                        One of the largest dairy producers in Sub-Saharan Africa
-                        with diverse livestock including cattle, goats, and
-                        camels providing milk and meat.
-                      </p>
-                      <ul class="list-unstyled small">
+                      <h4
+                        class="card-title h5"
+                        style="color: var(--primary-green)"
+                      >
+                        <i class="fas fa-chart-bar me-2"></i>Economic Impact
+                      </h4>
+                      <ul class="list-unstyled">
                         <li>
-                          <i class="fas fa-check text-warning me-2"></i>5.7
-                          billion litres milk annually
+                          Supports close to <strong>5 million people</strong>
                         </li>
+                        <li>Contributes about <strong>1% to GDP</strong></li>
                         <li>
-                          <i class="fas fa-check text-warning me-2"></i>3.5M
-                          improved dairy cattle
+                          Accounts for
+                          <strong>8% of total agricultural exports</strong>
                         </li>
-                        <li>
-                          <i class="fas fa-check text-warning me-2"></i>Growing
-                          export market
-                        </li>
+                        <li>Fourth largest foreign exchange earner</li>
                       </ul>
                     </div>
                   </div>
                 </div>
 
-                <div class="col-lg-4 col-md-6">
-                  <div
-                    class="card h-100"
-                    style="border-color: var(--text-dark)"
+                <div class="col-lg-6 mb-4">
+                  <div class="card h-100">
+                    <div class="card-body">
+                      <h4
+                        class="card-title h5"
+                        style="color: var(--primary-red)"
+                      >
+                        <i class="fas fa-globe me-2"></i>Export Markets
+                      </h4>
+                      <ul class="list-unstyled">
+                        <li>
+                          <strong>Traditional Markets:</strong> Germany,
+                          Belgium, UK, Sweden, Finland
+                        </li>
+                        <li>
+                          <strong>Specialty Markets:</strong> Premium coffee
+                          variants
+                        </li>
+                        <li>
+                          <strong>Emerging Markets:</strong> Various developing
+                          markets
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Coffee Regions -->
+              <div class="row mb-4">
+                <div class="col-12">
+                  <h3
+                    class="h4 mb-4 text-center"
+                    style="color: var(--primary-green)"
                   >
-                    <div
-                      class="card-header"
-                      style="background-color: var(--text-dark); color: white"
-                    >
-                      <h3 class="h5 mb-0">
-                        <i class="fas fa-apple-alt me-2"></i>Fruits & Nuts
-                      </h3>
-                    </div>
+                    Regional Coffee Flavors
+                  </h3>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-4 mb-3">
+                  <div class="card h-100">
                     <div class="card-body">
-                      <p class="small">
-                        Growing sector with macadamia nuts, avocados, mangoes,
-                        and passion fruits. Kenya is the third largest macadamia
-                        exporter globally.
-                      </p>
+                      <h5 class="card-title" style="color: var(--primary-red)">
+                        Mt. Kenya Region
+                      </h5>
                       <ul class="list-unstyled small">
                         <li>
-                          <i
-                            class="fas fa-check me-2"
-                            style="color: var(--text-dark)"
-                          ></i
-                          >12% annual growth (2005-2015)
+                          <strong>Murang'a:</strong> Medium acidity, full body,
+                          grape fruity taste
                         </li>
                         <li>
-                          <i
-                            class="fas fa-check me-2"
-                            style="color: var(--text-dark)"
-                          ></i
-                          >Premium macadamia quality
+                          <strong>Kiambu:</strong> Medium acidity, full body,
+                          grape fruity taste
                         </li>
                         <li>
-                          <i
-                            class="fas fa-check me-2"
-                            style="color: var(--text-dark)"
-                          ></i
-                          >Processing opportunities
+                          <strong>Nyeri:</strong> Complex sweetish flavor,
+                          floral, citrus acidity
+                        </li>
+                        <li>
+                          <strong>Kirinyaga:</strong> Citrus acidity, full body,
+                          blackcurrant flavor
                         </li>
                       </ul>
                     </div>
                   </div>
                 </div>
 
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-4 mb-3">
+                  <div class="card h-100">
+                    <div class="card-body">
+                      <h5 class="card-title" style="color: var(--primary-red)">
+                        Eastern Region
+                      </h5>
+                      <ul class="list-unstyled small">
+                        <li>
+                          <strong>Meru:</strong> Bright citrus acidity, berries
+                          and chocolate
+                        </li>
+                        <li>
+                          <strong>Embu:</strong> Bright citrus acidity, berries
+                          and chocolate
+                        </li>
+                        <li>
+                          <strong>Machakos/Makueni:</strong> Medium acidity,
+                          chocolate and caramel
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 mb-3">
+                  <div class="card h-100">
+                    <div class="card-body">
+                      <h5 class="card-title" style="color: var(--primary-red)">
+                        Other Regions
+                      </h5>
+                      <ul class="list-unstyled small">
+                        <li>
+                          <strong>Rift Valley:</strong> Medium acidity,
+                          chocolate taste
+                        </li>
+                        <li>
+                          <strong>Western:</strong> Bright acidity with fruity
+                          overtones
+                        </li>
+                        <li>
+                          <strong>Kisii:</strong> "God's Bath" - medium acidity,
+                          medium body
+                        </li>
+                        <li>
+                          <strong>Coastal:</strong> Medium acidity, full body,
+                          fruity
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="text-center mt-4">
+                <div class="alert alert-warning" role="alert">
+                  <h4 class="alert-heading">
+                    <i class="fas fa-coffee me-2"></i>DRINK KENYA COFFEE
+                  </h4>
+                  <p class="mb-0 lead">
+                    <strong>REMAIN VERY REFRESHED AND REJUVENATED</strong>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tea Industry Section -->
+    <section id="tea" class="py-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h2
+              class="display-5 fw-bold mb-4 text-center"
+              style="color: var(--primary-green)"
+            >
+              <i class="fas fa-leaf me-3"></i>Kenyan Tea | Natural | Fresh |
+              Premium
+            </h2>
+
+            <div class="content-text">
+              <div class="row mb-4">
+                <div class="col-lg-8 mx-auto text-center">
+                  <p class="lead">
+                    Kenya is the
+                    <strong>third largest producer and largest exporter</strong>
+                    of tea in the world, contributing over
+                    <strong>23%</strong> to global tea exports.
+                  </p>
+                </div>
+              </div>
+
+              <div class="row mb-5">
+                <div class="col-lg-6 mb-4">
                   <div class="card h-100 border-success">
                     <div class="card-header bg-success text-white">
                       <h3 class="h5 mb-0">
-                        <i class="fas fa-bug me-2"></i>Pyrethrum
+                        <i class="fas fa-mountain me-2"></i>Growing Conditions
                       </h3>
                     </div>
                     <div class="card-body">
-                      <p class="small">
-                        Natural insecticide from chrysanthemum flowers. Kenyan
-                        pyrethrin is considered the best in the world with ideal
-                        growing conditions.
-                      </p>
-                      <ul class="list-unstyled small">
+                      <ul class="list-unstyled">
                         <li>
-                          <i class="fas fa-check text-success me-2"></i>Best
-                          quality globally
+                          <i
+                            class="fas fa-map-marked-alt text-success me-2"
+                          ></i>
+                          19 tea-growing counties
                         </li>
                         <li>
-                          <i class="fas fa-check text-success me-2"></i>20,000
-                          MT potential annually
+                          <i
+                            class="fas fa-ruler-vertical text-success me-2"
+                          ></i>
+                          1,500m - 2,700m above sea level
                         </li>
                         <li>
-                          <i class="fas fa-check text-success me-2"></i>19
-                          producing counties
+                          <i class="fas fa-cloud-rain text-success me-2"></i>
+                          1,200mm - 1,400mm rainfall annually
+                        </li>
+                        <li>
+                          <i class="fas fa-calendar text-success me-2"></i>
+                          Year-round production
+                        </li>
+                        <li>
+                          <i class="fas fa-globe text-success me-2"></i>
+                          Equatorial location advantage
                         </li>
                       </ul>
                     </div>
                   </div>
                 </div>
 
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-6 mb-4">
                   <div
                     class="card h-100"
-                    style="border-color: var(--primary-green)"
+                    style="border-color: var(--primary-red)"
                   >
+                    <div
+                      class="card-header"
+                      style="background-color: var(--primary-red); color: white"
+                    >
+                      <h3 class="h5 mb-0">
+                        <i class="fas fa-chart-line me-2"></i>Industry
+                        Statistics
+                      </h3>
+                    </div>
+                    <div class="card-body">
+                      <ul class="list-unstyled">
+                        <li>
+                          <i class="fas fa-map text-danger me-2"></i>
+                          218,000 hectares under tea
+                        </li>
+                        <li>
+                          <i class="fas fa-weight text-danger me-2"></i>
+                          473,000 metric tonnes production
+                        </li>
+                        <li>
+                          <i class="fas fa-hand-paper text-danger me-2"></i>
+                          90%+ hand-picked tea
+                        </li>
+                        <li>
+                          <i class="fas fa-users text-danger me-2"></i>
+                          5 million people supported
+                        </li>
+                        <li>
+                          <i
+                            class="fas fa-money-bill-wave text-danger me-2"
+                          ></i>
+                          Ksh 120 billion export earnings
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Purple Tea Section -->
+              <div class="row mb-4">
+                <div class="col-12">
+                  <div
+                    class="alert"
+                    style="
+                      background-color: #f3e5f5;
+                      border-color: #ab47bc;
+                      color: #4a148c;
+                    "
+                  >
+                    <h4 class="alert-heading" style="color: #6a1b9a">
+                      <i class="fas fa-star me-2"></i>Kenya Purple Tea -
+                      Exclusive to Kenya
+                    </h4>
+                    <p class="mb-2">
+                      Purple tea is a <strong>rare tea variety</strong> grown in
+                      Mt. Kenya and Rift Valley regions, derived from a new
+                      crossbred variety of Camellia sinensis.
+                    </p>
+                    <ul class="mb-0">
+                      <li>
+                        Very rich in <strong>anthocyanin</strong> (a flavonoid)
+                      </li>
+                      <li>Anti-inflammatory and anti-viral benefits</li>
+                      <li>Available in both loose form and tea bags</li>
+                      <li><strong>EXCLUSIVE to Kenya</strong></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6 mb-4">
+                  <div class="card h-100">
+                    <div class="card-body">
+                      <h4
+                        class="card-title h5"
+                        style="color: var(--primary-green)"
+                      >
+                        <i class="fas fa-award me-2"></i>Why Choose Kenya Tea?
+                      </h4>
+                      <ul class="list-unstyled">
+                        <li>✓ No pesticides or agro-chemicals</li>
+                        <li>
+                          ✓ No additives, preservatives or artificial coloring
+                        </li>
+                        <li>✓ Unique flavor profile</li>
+                        <li>✓ Compliance with global food safety standards</li>
+                        <li>✓ Environmental and social certifications</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-6 mb-4">
+                  <div class="card h-100">
+                    <div class="card-body">
+                      <h4
+                        class="card-title h5"
+                        style="color: var(--primary-red)"
+                      >
+                        <i class="fas fa-heart me-2"></i>Tea Culture in Kenya
+                      </h4>
+                      <p class="card-text">
+                        "Anytime is tea time in Kenya" - Tea is served at
+                        breakfast, mealtimes, and during regular teatime. It's
+                        customary to serve visitors tea and it's an integral
+                        part of cultural celebrations, weddings, and homecoming
+                        events.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Horticulture Section -->
+    <section id="horticulture" class="py-5 bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h2
+              class="display-5 fw-bold mb-4 text-center"
+              style="color: var(--primary-red)"
+            >
+              <i class="fas fa-seedling me-3"></i>Horticulture & Floriculture
+            </h2>
+
+            <div class="content-text">
+              <div class="row mb-4">
+                <div class="col-lg-8 mx-auto text-center">
+                  <p class="lead">
+                    Kenya's horticulture sector is a major economic pillar,
+                    contributing
+                    <strong>33% of GDP</strong> and supporting over
+                    <strong>4 million jobs</strong>.
+                  </p>
+                </div>
+              </div>
+
+              <div class="row mb-5">
+                <div class="col-lg-4 mb-4">
+                  <div class="card h-100 text-center">
+                    <div class="card-body">
+                      <i
+                        class="fas fa-flower-daffodil fa-3x mb-3"
+                        style="color: var(--primary-red)"
+                      ></i>
+                      <h4 class="card-title h5">Cut Flowers</h4>
+                      <p class="card-text">
+                        Kenya is the <strong>third largest producer</strong> and
+                        exporter of cut flowers globally. "From Kenya With Love"
+                        - 95% of flowers are exported.
+                      </p>
+                      <ul class="list-unstyled small text-start">
+                        <li>• 59% exported to Holland</li>
+                        <li>• 14% to United Kingdom</li>
+                        <li>• Growing markets: UAE, USA</li>
+                        <li>• Main flowers: roses, carnations, alstroemeria</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 mb-4">
+                  <div class="card h-100 text-center">
+                    <div class="card-body">
+                      <i
+                        class="fas fa-apple-alt fa-3x mb-3"
+                        style="color: var(--primary-green)"
+                      ></i>
+                      <h4 class="card-title h5">Fruits & Nuts</h4>
+                      <p class="card-text">
+                        Kenya's fruit sector has grown by
+                        <strong>12% annually</strong>
+                        between 2005-2015. Major opportunity in processing
+                        sector.
+                      </p>
+                      <ul class="list-unstyled small text-start">
+                        <li>• 40% of fruit crop currently goes to waste</li>
+                        <li>• Only 8% currently processed</li>
+                        <li>• Main exports: macadamia, cashew nuts</li>
+                        <li>• 27 registered nut processing companies</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 mb-4">
+                  <div class="card h-100 text-center">
+                    <div class="card-body">
+                      <i
+                        class="fas fa-leaf fa-3x mb-3"
+                        style="color: var(--warning-yellow)"
+                      ></i>
+                      <h4 class="card-title h5">Herbs & Spices</h4>
+                      <p class="card-text">
+                        Emerging niche products gaining popularity in
+                        international markets, especially in the EU region.
+                      </p>
+                      <ul class="list-unstyled small text-start">
+                        <li>• Chives, basil, coriander</li>
+                        <li>• Thyme and rosemary</li>
+                        <li>• Tender stem broccoli (TSB)</li>
+                        <li>• Destinations: UK, France, Netherlands</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Macadamia Focus -->
+              <div class="row mb-4">
+                <div class="col-12">
+                  <div class="alert alert-success" role="alert">
+                    <h4 class="alert-heading">
+                      <i class="fas fa-nut me-2"></i>Macadamia - World's Finest
+                      Dessert Nut
+                    </h4>
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <p class="mb-2">
+                          Kenya is ranked as the
+                          <strong>third largest exporter</strong> of macadamia
+                          nuts after Australia and South Africa. Over
+                          <strong>2 million smallholder farmers</strong>
+                          grow macadamia across the country.
+                        </p>
+                      </div>
+                      <div class="col-lg-6">
+                        <p class="mb-0">
+                          <strong>Key Markets:</strong> Japan, Hong Kong,
+                          Germany, USA, Canada, Switzerland, China, East Asia,
+                          and India. Kenyan macadamia is especially richer and
+                          crunchier due to mineral-rich highland soils.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Other Agricultural Products -->
+    <section id="other-products" class="py-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h2 class="display-5 fw-bold mb-4 text-center">
+              Other Key Agricultural Products
+            </h2>
+
+            <div class="content-text">
+              <div class="row">
+                <div class="col-lg-6 mb-4">
+                  <div class="card h-100">
+                    <div class="card-header bg-warning text-dark">
+                      <h3 class="h5 mb-0">
+                        <i class="fas fa-bug me-2"></i>Pyrethrum Industry
+                      </h3>
+                    </div>
+                    <div class="card-body">
+                      <p class="card-text">
+                        Kenya has the potential to produce over
+                        <strong>20,000 MTs</strong> of dry pyrethrum flowers
+                        annually, earning over <strong>KES 7.5 billion</strong>
+                        in foreign exchange.
+                      </p>
+                      <ul class="list-unstyled small">
+                        <li>• Ideal conditions for high quality pyrethrum</li>
+                        <li>
+                          • Kenyan pyrethrin has reputation as best in the world
+                        </li>
+                        <li>• Grown in 19 counties across Kenya</li>
+                        <li>• Used as natural insecticides</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-6 mb-4">
+                  <div class="card h-100">
                     <div
                       class="card-header"
                       style="
@@ -306,143 +724,255 @@
                       "
                     >
                       <h3 class="h5 mb-0">
-                        <i class="fas fa-tractor me-2"></i>Agribusiness
+                        <i class="fas fa-glass-whiskey me-2"></i>Dairy Industry
                       </h3>
                     </div>
                     <div class="card-body">
-                      <p class="small">
-                        Supporting infrastructure and services for agricultural
-                        development including processing, storage, and value
-                        addition opportunities.
+                      <p class="card-text">
+                        Kenya is one of the largest dairy producers in
+                        Sub-Saharan Africa with
+                        <strong>5.7 billion litres</strong> annual milk
+                        production.
                       </p>
                       <ul class="list-unstyled small">
+                        <li>• 3.5 million improved dairy cattle</li>
+                        <li>• 30 active milk processors</li>
+                        <li>• Projected 12 billion litres by 2030</li>
+                        <li>• Growing 4.5-5% annually</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Agriculture Agencies -->
+    <section id="agencies" class="py-5 bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h2 class="display-5 fw-bold mb-4 text-center">
+              Agriculture Agencies & Resources
+            </h2>
+
+            <div class="content-text">
+              <div class="row">
+                <div class="col-lg-6 mb-4">
+                  <div class="card h-100">
+                    <div class="card-header bg-success text-white">
+                      <h3 class="h5 mb-0">
+                        <i class="fas fa-coffee me-2"></i>Coffee & Tea Agencies
+                      </h3>
+                    </div>
+                    <div class="card-body">
+                      <ul class="list-unstyled">
                         <li>
-                          <i class="fas fa-check text-success me-2"></i>Value
-                          addition focus
+                          <i class="fas fa-link text-success me-2"></i>Coffee
+                          Directorate
                         </li>
                         <li>
-                          <i class="fas fa-check text-success me-2"></i>Modern
-                          processing facilities
+                          <i class="fas fa-link text-success me-2"></i>Tea Board
+                          of Kenya
                         </li>
                         <li>
-                          <i class="fas fa-check text-success me-2"></i>Export
-                          market access
+                          <i class="fas fa-link text-success me-2"></i>KTDA
+                        </li>
+                        <li>
+                          <i class="fas fa-link text-success me-2"></i>KETEPA
+                        </li>
+                        <li>
+                          <i class="fas fa-link text-success me-2"></i>KPCU
+                        </li>
+                        <li>
+                          <i class="fas fa-link text-success me-2"></i>KEPROBA
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-6 mb-4">
+                  <div class="card h-100">
+                    <div
+                      class="card-header"
+                      style="background-color: var(--primary-red); color: white"
+                    >
+                      <h3 class="h5 mb-0">
+                        <i class="fas fa-industry me-2"></i>Other Agricultural
+                        Bodies
+                      </h3>
+                    </div>
+                    <div class="card-body">
+                      <ul class="list-unstyled">
+                        <li>
+                          <i class="fas fa-link text-danger me-2"></i
+                          >Agriculture and Food Authority
+                        </li>
+                        <li>
+                          <i class="fas fa-link text-danger me-2"></i>Pyrethrum
+                          Board of Kenya
+                        </li>
+                        <li>
+                          <i class="fas fa-link text-danger me-2"></i>New Kenya
+                          Cooperative Creameries
+                        </li>
+                        <li>
+                          <i class="fas fa-link text-danger me-2"></i>Kenya Nut
+                          Company
+                        </li>
+                        <li>
+                          <i class="fas fa-link text-danger me-2"></i>Kenya
+                          Flower Council
+                        </li>
+                        <li>
+                          <i class="fas fa-link text-danger me-2"></i>Kenya
+                          Sugar Board
                         </li>
                       </ul>
                     </div>
                   </div>
                 </div>
               </div>
-            </section>
 
-            <!-- Investment Opportunities -->
-            <section class="mb-5">
-              <div class="alert alert-success">
-                <h3 class="h4 alert-heading">
-                  <i class="fas fa-chart-line me-2"></i>Investment Opportunities
-                </h3>
-                <p class="mb-0">
-                  Kenya's agriculture sector offers numerous investment
-                  opportunities across the value chain from production to
-                  processing and export. The government provides various
-                  incentives and support for agricultural investments.
-                </p>
-              </div>
-
-              <div class="row">
-                <div class="col-md-6">
-                  <h4 class="h5">Key Opportunities</h4>
-                  <ul class="list-unstyled">
-                    <li>
-                      <i class="fas fa-arrow-right text-success me-2"></i
-                      >Agro-processing and value addition
-                    </li>
-                    <li>
-                      <i class="fas fa-arrow-right text-success me-2"></i>Cold
-                      chain and storage facilities
-                    </li>
-                    <li>
-                      <i class="fas fa-arrow-right text-success me-2"></i
-                      >Irrigation and modern farming
-                    </li>
-                    <li>
-                      <i class="fas fa-arrow-right text-success me-2"></i
-                      >Organic and specialty products
-                    </li>
-                    <li>
-                      <i class="fas fa-arrow-right text-success me-2"></i>Export
-                      market development
-                    </li>
-                  </ul>
-                </div>
-                <div class="col-md-6">
-                  <h4 class="h5">Government Support</h4>
-                  <ul class="list-unstyled">
-                    <li>
-                      <i class="fas fa-check text-success me-2"></i>Tax
-                      incentives for investors
-                    </li>
-                    <li>
-                      <i class="fas fa-check text-success me-2"></i>Research and
-                      development support
-                    </li>
-                    <li>
-                      <i class="fas fa-check text-success me-2"></i>Market
-                      access facilitation
-                    </li>
-                    <li>
-                      <i class="fas fa-check text-success me-2"></i
-                      >Infrastructure development
-                    </li>
-                    <li>
-                      <i class="fas fa-check text-success me-2"></i>Training and
-                      capacity building
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </section>
-
-            <!-- Call to Action -->
-            <section class="mb-5">
-              <div class="row">
+              <div class="row mt-4">
                 <div class="col-12">
-                  <div
-                    class="card"
-                    style="
-                      background: linear-gradient(
-                        135deg,
-                        var(--primary-green) 0%,
-                        var(--primary-red) 100%
-                      );
-                      color: white;
-                    "
-                  >
-                    <div class="card-body text-center p-4">
-                      <h3 class="h4 mb-3">
-                        Explore Kenya's Agricultural Export Products
-                      </h3>
-                      <p class="mb-4">
-                        Learn more about our main export products including
-                        coffee, tea, flowers, and pyrethrum, along with their
-                        regulatory bodies and agencies.
-                      </p>
-                      <a
-                        href="export-products.html"
-                        class="btn btn-light btn-lg"
-                      >
-                        <i class="fas fa-shipping-fast me-2"></i>View Export
-                        Products
-                      </a>
-                    </div>
+                  <div class="alert alert-info" role="alert">
+                    <h4 class="alert-heading">
+                      <i class="fas fa-handshake me-2"></i>Partnership
+                      Opportunities
+                    </h4>
+                    <p class="mb-0">
+                      Kenya's agricultural sector offers numerous opportunities
+                      for partnerships, investment, and trade. Contact the
+                      embassy to learn more about how to engage with Kenya's
+                      thriving agricultural industry and explore business
+                      opportunities in this vital economic sector.
+                    </p>
                   </div>
                 </div>
               </div>
-            </section>
+            </div>
           </div>
         </div>
       </div>
-    </main>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta-section">
+      <div class="container position-relative">
+        <div class="row justify-content-center text-center">
+          <div class="col-lg-8">
+            <h2 class="display-6 fw-bold mb-4">
+              Partner with Kenya's Agriculture Sector
+            </h2>
+            <p class="lead mb-4">
+              Discover investment opportunities, trade partnerships, and
+              business collaborations in Kenya's dynamic agricultural industry.
+              From premium coffee and tea to innovative horticulture and
+              sustainable farming practices.
+            </p>
+            <div class="d-flex gap-3 justify-content-center flex-wrap">
+              <a href="expression-interest.html" class="btn btn-light btn-lg">
+                <i class="fas fa-handshake me-2"></i>Express Interest
+              </a>
+              <a
+                href="diaspora-registration.html"
+                class="btn btn-outline-light btn-lg"
+              >
+                <i class="fas fa-phone me-2"></i>Contact Embassy
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 mb-4">
+            <h3 class="h5 mb-3">Embassy of Kenya</h3>
+            <p class="text-white-50 small">
+              Promoting Kenya's interests and serving our citizens abroad with
+              excellence and integrity.
+            </p>
+          </div>
+          <div class="col-lg-3 mb-4">
+            <h4 class="h6 mb-3">Where We Are</h4>
+            <p class="text-white-50 small mb-0">
+              Kenya Embassy<br />
+              29/1 and 31, Sukhumvit 68 Road<br />
+              Bang Na Nue, Bang Na<br />
+              Bangkok 10260<br />
+              Thailand
+            </p>
+          </div>
+          <div class="col-lg-2 col-md-4 mb-4">
+            <h4 class="h6 mb-3">Contact Us</h4>
+            <p class="text-white-50 small mb-1">
+              <strong>Tel:</strong> +66990745752
+            </p>
+            <p class="text-white-50 small mb-1">
+              <strong>Landline:</strong> 023993992
+            </p>
+            <p class="text-white-50 small mb-1">
+              <strong>Email:</strong><br />
+              <a
+                href="mailto:kenyaembassybangkok@yahoo.com"
+                class="text-white-50"
+                >kenyaembassybangkok@yahoo.com</a
+              ><br />
+              <a href="mailto:Bangkok@mfa.go.ke" class="text-white-50"
+                >Bangkok@mfa.go.ke</a
+              >
+            </p>
+          </div>
+          <div class="col-lg-2 col-md-4 mb-4">
+            <h4 class="h6 mb-3">Office Hours</h4>
+            <p class="text-white-50 small mb-1">
+              <strong>Mon - Thu:</strong><br />9am - 5pm
+            </p>
+            <p class="text-white-50 small mb-1">
+              <strong>Friday:</strong><br />9am - 1pm
+            </p>
+          </div>
+          <div class="col-lg-2 col-md-4 mb-4">
+            <h4 class="h6 mb-3">Follow Us</h4>
+            <div class="d-flex gap-2">
+              <a href="#" class="text-white-50" title="Facebook">
+                <i class="fab fa-facebook fa-lg"></i>
+              </a>
+              <a href="#" class="text-white-50" title="X (Twitter)">
+                <i class="fab fa-x-twitter fa-lg"></i>
+              </a>
+              <a href="#" class="text-white-50" title="LinkedIn">
+                <i class="fab fa-linkedin fa-lg"></i>
+              </a>
+              <a href="#" class="text-white-50" title="Instagram">
+                <i class="fab fa-instagram fa-lg"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <hr class="my-4 border-secondary" />
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <p class="small text-white-50 mb-0">
+              &copy; 2025 Embassy of the Republic of Kenya. All rights reserved.
+            </p>
+          </div>
+          <div class="col-md-6 text-md-end">
+            <p class="small text-white-50 mb-0">Official Government Website</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
   </body>
