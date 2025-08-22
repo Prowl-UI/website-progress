@@ -635,38 +635,42 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-  const filterButtons = document.querySelectorAll(".filter-btn");
+  const filterButtons = document.querySelectorAll(".gallery-filter-btn"); // Fixed selector
   const galleryItems = document.querySelectorAll(".gallery-item");
+
+  if (!filterButtons.length || !galleryItems.length) {
+    console.warn("Gallery elements not found");
+    return;
+  }
 
   filterButtons.forEach((button) => {
     button.addEventListener("click", function () {
       const category = this.getAttribute("data-category");
 
+      // Update active button
       filterButtons.forEach((btn) => btn.classList.remove("active"));
       this.classList.add("active");
 
+      // Filter items using CSS classes instead of inline styles
       galleryItems.forEach((item) => {
-        if (
-          category === "all" ||
-          item.getAttribute("data-category") === category
-        ) {
-          item.style.display = "block";
-          setTimeout(() => {
-            item.style.opacity = "1";
-            item.style.transform = "scale(1)";
-          }, 10);
+        const itemCategory = item.getAttribute("data-category");
+
+        if (category === "all" || itemCategory === category) {
+          item.classList.remove("fade-out", "hidden");
+          item.classList.add("fade-in");
         } else {
-          item.style.opacity = "0";
-          item.style.transform = "scale(0.8)";
-          setTimeout(() => {
-            item.style.display = "none";
-          }, 300);
+          item.classList.remove("fade-in");
+          item.classList.add("fade-out");
+
+          // Use transitionend event instead of fixed timeout
+          item.addEventListener("transitionend", function hideItem() {
+            if (item.classList.contains("fade-out")) {
+              item.classList.add("hidden");
+            }
+            item.removeEventListener("transitionend", hideItem);
+          });
         }
       });
     });
-  });
-
-  galleryItems.forEach((item) => {
-    item.style.transition = "opacity 0.3s ease, transform 0.3s ease";
   });
 });
