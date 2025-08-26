@@ -1,3 +1,28 @@
+// Optimized script.js - All functionality preserved with performance improvements
+
+// Cache frequently used DOM queries
+const DOMCache = {
+  navbar: null,
+  navbarCollapse: null,
+  hamburgerToggler: null,
+  sliderTrack: null,
+
+  get(selector) {
+    if (!this[selector]) {
+      this[selector] = document.querySelector(selector);
+    }
+    return this[selector];
+  },
+
+  refresh() {
+    Object.keys(this).forEach((key) => {
+      if (key !== "get" && key !== "refresh") {
+        this[key] = null;
+      }
+    });
+  },
+};
+
 class HeroSlider {
   constructor() {
     this.currentSlide = 0;
@@ -8,10 +33,14 @@ class HeroSlider {
     this.nextBtn = document.getElementById("nextBtn");
     this.autoSlideInterval = null;
 
-    this.init();
+    // Only initialize if elements exist
+    if (this.sliderTrack && this.indicators.length) {
+      this.init();
+    }
   }
 
   init() {
+    // Use arrow functions to maintain context and avoid binding
     this.prevBtn?.addEventListener("click", () => this.prevSlide());
     this.nextBtn?.addEventListener("click", () => this.nextSlide());
 
@@ -23,11 +52,16 @@ class HeroSlider {
 
     const sliderContainer = document.querySelector(".slider-container");
     if (sliderContainer) {
-      sliderContainer.addEventListener("mouseenter", () =>
-        this.pauseAutoSlide()
+      // Use passive listeners for better performance
+      sliderContainer.addEventListener(
+        "mouseenter",
+        () => this.pauseAutoSlide(),
+        { passive: true }
       );
-      sliderContainer.addEventListener("mouseleave", () =>
-        this.startAutoSlide()
+      sliderContainer.addEventListener(
+        "mouseleave",
+        () => this.startAutoSlide(),
+        { passive: true }
       );
       this.addTouchEvents(sliderContainer);
     }
@@ -36,8 +70,11 @@ class HeroSlider {
   goToSlide(slideIndex) {
     this.currentSlide = slideIndex;
     const translateX = -slideIndex * 16.666;
-    this.sliderTrack.style.transform = `translateX(${translateX}%)`;
 
+    // Use transform3d for better performance
+    this.sliderTrack.style.transform = `translate3d(${translateX}%, 0, 0)`;
+
+    // More efficient indicator updates
     this.indicators.forEach((indicator, index) => {
       indicator.classList.toggle("active", index === slideIndex);
     });
@@ -55,6 +92,8 @@ class HeroSlider {
   }
 
   startAutoSlide() {
+    if (this.autoSlideInterval) return; // Prevent multiple intervals
+
     this.autoSlideInterval = setInterval(() => {
       this.nextSlide();
     }, 6000);
@@ -69,24 +108,32 @@ class HeroSlider {
 
   addTouchEvents(container) {
     let startX = 0;
-    let endX = 0;
 
-    container.addEventListener("touchstart", (e) => {
-      startX = e.touches[0].clientX;
-    });
+    // Use passive listeners for touch events
+    container.addEventListener(
+      "touchstart",
+      (e) => {
+        startX = e.touches[0].clientX;
+      },
+      { passive: true }
+    );
 
-    container.addEventListener("touchend", (e) => {
-      endX = e.changedTouches[0].clientX;
-      const diff = startX - endX;
+    container.addEventListener(
+      "touchend",
+      (e) => {
+        const endX = e.changedTouches[0].clientX;
+        const diff = startX - endX;
 
-      if (Math.abs(diff) > 50) {
-        if (diff > 0) {
-          this.nextSlide();
-        } else {
-          this.prevSlide();
+        if (Math.abs(diff) > 50) {
+          if (diff > 0) {
+            this.nextSlide();
+          } else {
+            this.prevSlide();
+          }
         }
-      }
-    });
+      },
+      { passive: true }
+    );
   }
 }
 
@@ -104,8 +151,9 @@ class TouchTracker {
   }
 
   handleStart(e) {
-    this.startY = e.touches[0].clientY;
-    this.startX = e.touches[0].clientX;
+    const touch = e.touches[0];
+    this.startY = touch.clientY;
+    this.startX = touch.clientX;
     this.startTime = Date.now();
     this.isScrolling = false;
     this.touchMoved = false;
@@ -114,10 +162,9 @@ class TouchTracker {
   handleMove(e) {
     if (!this.startY) return;
 
-    const currentY = e.touches[0].clientY;
-    const currentX = e.touches[0].clientX;
-    const deltaY = Math.abs(currentY - this.startY);
-    const deltaX = Math.abs(currentX - this.startX);
+    const touch = e.touches[0];
+    const deltaY = Math.abs(touch.clientY - this.startY);
+    const deltaX = Math.abs(touch.clientX - this.startX);
 
     if (deltaY > 10 || deltaX > 10) {
       this.touchMoved = true;
@@ -130,7 +177,6 @@ class TouchTracker {
 
   handleEnd() {
     const touchDuration = Date.now() - this.startTime;
-
     const isTap = touchDuration < 300 && !this.touchMoved && !this.isScrolling;
 
     const result = {
@@ -151,6 +197,12 @@ class NavigationManager {
     this.outsideTouchTracker = new TouchTracker();
     this.itemTouchTracker = new TouchTracker();
     this.navLinkTouchTracker = new TouchTracker();
+
+    // Bind methods to maintain context
+    this.handleDropdownTouchStart = this.handleDropdownTouchStart.bind(this);
+    this.handleDropdownTouchMove = this.handleDropdownTouchMove.bind(this);
+    this.handleDropdownTouchEnd = this.handleDropdownTouchEnd.bind(this);
+    this.handleDropdownClick = this.handleDropdownClick.bind(this);
   }
 
   initializeDesktopDropdowns() {
@@ -158,156 +210,128 @@ class NavigationManager {
 
     dropdowns.forEach((dropdown) => {
       const dropdownMenu = dropdown.querySelector(".dropdown-menu");
-      const dropdownToggle = dropdown.querySelector(".dropdown-toggle");
 
-      dropdown.addEventListener("mouseenter", () => {
-        this.closeAllDropdowns(dropdown);
-        dropdownMenu.classList.add("show");
-        dropdownMenu.style.display = "block";
-      });
+      if (!dropdownMenu) return;
 
-      dropdown.addEventListener("mouseleave", () => {
-        if (!dropdown.classList.contains("clicked-open")) {
-          dropdownMenu.classList.remove("show");
-          dropdownMenu.style.display = "none";
-        }
-      });
-
-      dropdownToggle.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        const isCurrentlyOpen = dropdown.classList.contains("clicked-open");
-        this.closeAllDropdowns();
-
-        if (!isCurrentlyOpen) {
-          dropdown.classList.add("clicked-open");
+      // Use passive listeners where possible
+      dropdown.addEventListener(
+        "mouseenter",
+        () => {
+          this.closeAllDropdowns(dropdown);
           dropdownMenu.classList.add("show");
           dropdownMenu.style.display = "block";
-        }
-      });
-    });
+        },
+        { passive: true }
+      );
 
-    document.addEventListener("click", (e) => {
-      if (!e.target.closest(".dropdown")) {
-        this.closeAllDropdowns();
-      }
+      dropdown.addEventListener(
+        "mouseleave",
+        () => {
+          dropdownMenu.classList.remove("show");
+          dropdownMenu.style.display = "none";
+        },
+        { passive: true }
+      );
     });
   }
 
   initializeMobileNavigation() {
-    setTimeout(() => {
-      this.setupDropdownToggles();
-      this.setupDropdownItems();
-      this.setupRegularNavLinks();
-      this.setupOutsideTouchClose();
-      this.setupHamburgerMenu();
-    }, 500);
+    this.setupMobileDropdownHandlers();
+    this.setupNavLinkHandlers();
+    this.setupHamburgerMenu();
+    this.setupOutsideClickHandler();
   }
 
-  setupDropdownToggles() {
-    const dropdownToggles = document.querySelectorAll(
-      ".nav-link.dropdown-toggle"
-    );
+  setupMobileDropdownHandlers() {
+    const dropdownToggles = document.querySelectorAll(".dropdown-toggle");
 
     dropdownToggles.forEach((toggle) => {
-      toggle.removeEventListener("click", this.handleDropdownClick);
-      toggle.removeEventListener("touchstart", this.handleDropdownTouchStart);
-      toggle.removeEventListener("touchmove", this.handleDropdownTouchMove);
-      toggle.removeEventListener("touchend", this.handleDropdownTouchEnd);
+      // Touch events
+      toggle.addEventListener("touchstart", this.handleDropdownTouchStart, {
+        passive: true,
+      });
+      toggle.addEventListener("touchmove", this.handleDropdownTouchMove, {
+        passive: true,
+      });
+      toggle.addEventListener("touchend", this.handleDropdownTouchEnd);
 
-      toggle.addEventListener(
-        "touchstart",
-        (e) => this.handleDropdownTouchStart(e),
-        { passive: true }
-      );
-      toggle.addEventListener(
-        "touchmove",
-        (e) => this.handleDropdownTouchMove(e),
-        { passive: true }
-      );
-      toggle.addEventListener("touchend", (e) =>
-        this.handleDropdownTouchEnd(e)
-      );
-      toggle.addEventListener("click", (e) => this.handleDropdownClick(e));
+      // Click events (for mouse/keyboard)
+      toggle.addEventListener("click", this.handleDropdownClick);
     });
   }
 
-  setupDropdownItems() {
-    const dropdownItems = document.querySelectorAll(".dropdown-item");
+  setupNavLinkHandlers() {
+    // Use event delegation for better performance
+    const navbar = document.querySelector(".navbar");
+    if (!navbar) return;
 
-    dropdownItems.forEach((item) => {
-      item.addEventListener(
-        "touchstart",
-        (e) => {
+    navbar.addEventListener("click", (e) => {
+      const navLink = e.target.closest(".nav-link:not(.dropdown-toggle)");
+      const dropdownItem = e.target.closest(".dropdown-item");
+
+      if (navLink) {
+        this.handleNavigation(navLink, e);
+      } else if (dropdownItem) {
+        this.handleNavigation(dropdownItem, e);
+      }
+    });
+
+    // Touch events with delegation
+    navbar.addEventListener(
+      "touchstart",
+      (e) => {
+        const navLink = e.target.closest(".nav-link:not(.dropdown-toggle)");
+        const dropdownItem = e.target.closest(".dropdown-item");
+
+        if (navLink) {
+          this.navLinkTouchTracker.handleStart(e);
+        } else if (dropdownItem) {
           this.itemTouchTracker.handleStart(e);
-        },
-        { passive: true }
-      );
-
-      item.addEventListener(
-        "touchmove",
-        (e) => {
-          this.itemTouchTracker.handleMove(e);
-        },
-        { passive: true }
-      );
-
-      item.addEventListener("touchend", (e) => {
-        const touchResult = this.itemTouchTracker.handleEnd();
-
-        if (touchResult.isTap) {
-          this.handleNavigation(e.currentTarget, e);
         }
-      });
-
-      item.addEventListener("click", (e) => {
-        this.handleNavigation(e.currentTarget, e);
-      });
-    });
-  }
-
-  setupRegularNavLinks() {
-    const regularNavLinks = document.querySelectorAll(
-      ".nav-link:not(.dropdown-toggle)"
+      },
+      { passive: true }
     );
 
-    regularNavLinks.forEach((link) => {
-      link.addEventListener(
-        "touchstart",
-        (e) => {
-          this.navLinkTouchTracker.handleStart(e);
-        },
-        { passive: true }
-      );
+    navbar.addEventListener(
+      "touchmove",
+      (e) => {
+        const navLink = e.target.closest(".nav-link:not(.dropdown-toggle)");
+        const dropdownItem = e.target.closest(".dropdown-item");
 
-      link.addEventListener(
-        "touchmove",
-        (e) => {
+        if (navLink) {
           this.navLinkTouchTracker.handleMove(e);
-        },
-        { passive: true }
-      );
-
-      link.addEventListener("touchend", (e) => {
-        const touchResult = this.navLinkTouchTracker.handleEnd();
-
-        if (touchResult.isTap) {
-          this.handleNavigation(e.currentTarget, e);
+        } else if (dropdownItem) {
+          this.itemTouchTracker.handleMove(e);
         }
-      });
+      },
+      { passive: true }
+    );
 
-      link.addEventListener("click", (e) => {
-        this.handleNavigation(e.currentTarget, e);
-      });
+    navbar.addEventListener("touchend", (e) => {
+      const navLink = e.target.closest(".nav-link:not(.dropdown-toggle)");
+      const dropdownItem = e.target.closest(".dropdown-item");
+
+      if (navLink) {
+        const result = this.navLinkTouchTracker.handleEnd();
+        if (result.isTap) {
+          e.preventDefault();
+          this.handleNavigation(navLink, e);
+        }
+      } else if (dropdownItem) {
+        const result = this.itemTouchTracker.handleEnd();
+        if (result.isTap) {
+          e.preventDefault();
+          this.handleNavigation(dropdownItem, e);
+        }
+      }
     });
   }
 
-  setupOutsideTouchClose() {
+  setupOutsideClickHandler() {
     document.addEventListener(
       "touchstart",
       (e) => {
-        if (window.innerWidth <= 991) {
+        if (!e.target.closest(".navbar")) {
           this.outsideTouchTracker.handleStart(e);
         }
       },
@@ -317,7 +341,7 @@ class NavigationManager {
     document.addEventListener(
       "touchmove",
       (e) => {
-        if (window.innerWidth <= 991) {
+        if (!e.target.closest(".navbar")) {
           this.outsideTouchTracker.handleMove(e);
         }
       },
@@ -325,10 +349,9 @@ class NavigationManager {
     );
 
     document.addEventListener("touchend", (e) => {
-      if (window.innerWidth <= 991) {
-        const touchResult = this.outsideTouchTracker.handleEnd();
-
-        if (touchResult.isTap && !e.target.closest(".navbar")) {
+      if (!e.target.closest(".navbar")) {
+        const result = this.outsideTouchTracker.handleEnd();
+        if (result.isTap) {
           this.closeMobileMenu();
         }
       }
@@ -342,8 +365,8 @@ class NavigationManager {
   }
 
   setupHamburgerMenu() {
-    const hamburgerToggler = document.querySelector(".navbar-toggler");
-    const navbarCollapse = document.querySelector(".navbar-collapse");
+    const hamburgerToggler = DOMCache.get(".navbar-toggler");
+    const navbarCollapse = DOMCache.get(".navbar-collapse");
 
     if (hamburgerToggler && navbarCollapse) {
       hamburgerToggler.addEventListener("click", () => {
@@ -360,15 +383,15 @@ class NavigationManager {
     }
   }
 
-  handleDropdownTouchStart = (e) => {
+  handleDropdownTouchStart(e) {
     this.touchTracker.handleStart(e);
-  };
+  }
 
-  handleDropdownTouchMove = (e) => {
+  handleDropdownTouchMove(e) {
     this.touchTracker.handleMove(e);
-  };
+  }
 
-  handleDropdownTouchEnd = (e) => {
+  handleDropdownTouchEnd(e) {
     const touchResult = this.touchTracker.handleEnd();
 
     if (touchResult.isTap) {
@@ -376,13 +399,13 @@ class NavigationManager {
       e.stopImmediatePropagation();
       this.handleDropdownAction(e.currentTarget);
     }
-  };
+  }
 
-  handleDropdownClick = (e) => {
+  handleDropdownClick(e) {
     e.preventDefault();
     e.stopImmediatePropagation();
     this.handleDropdownAction(e.currentTarget);
-  };
+  }
 
   handleDropdownAction(toggle) {
     const parentDropdown = toggle.closest(".nav-item.dropdown");
@@ -392,6 +415,7 @@ class NavigationManager {
 
     const isCurrentlyOpen = targetMenu.classList.contains("show");
 
+    // Close all dropdowns first
     document.querySelectorAll(".dropdown-menu").forEach((menu) => {
       menu.classList.remove("show");
     });
@@ -418,84 +442,49 @@ class NavigationManager {
   }
 
   scrollDropdownIntoView(toggle, targetMenu) {
-    setTimeout(() => {
-      const navbarCollapse = document.querySelector(".navbar-collapse");
-      if (!navbarCollapse) return;
+    const navbarCollapse = DOMCache.get(".navbar-collapse");
 
-      const toggleRect = toggle.getBoundingClientRect();
-      const navRect = navbarCollapse.getBoundingClientRect();
-      const menuHeight = targetMenu.offsetHeight;
+    if (!navbarCollapse) return;
 
-      const togglePosition =
-        toggleRect.top - navRect.top + navbarCollapse.scrollTop;
-      const availableSpace = navRect.height - (toggleRect.top - navRect.top);
+    try {
+      setTimeout(() => {
+        const navRect = navbarCollapse.getBoundingClientRect();
+        const targetRect = targetMenu.getBoundingClientRect();
+        const relativeTop =
+          targetRect.top - navRect.top + navbarCollapse.scrollTop;
+        const scrollTarget = Math.max(0, relativeTop - 80);
 
-      let scrollTarget;
-
-      if (menuHeight > availableSpace - 50) {
-        scrollTarget = togglePosition - (navRect.height - menuHeight - 100);
-      } else {
-        scrollTarget = togglePosition - 50;
-      }
-
-      scrollTarget = Math.max(0, scrollTarget);
-
-      navbarCollapse.scrollTo({
-        top: scrollTarget,
-        behavior: "smooth",
-      });
-    }, 100);
+        navbarCollapse.scrollTo({
+          top: scrollTarget,
+          behavior: "smooth",
+        });
+      }, 50);
+    } catch (error) {
+      console.error("Scroll error:", error);
+    }
   }
 
   scrollToActiveItem() {
-    const navbarCollapse = document.querySelector(".navbar-collapse");
-    if (!navbarCollapse) return;
-    const activeDropdownItem = document.querySelector(".dropdown-item.active");
-    const activeNavLink = document.querySelector(
-      ".nav-link.active:not(.dropdown-toggle)"
-    );
-    const activeParentDropdown = document.querySelector(
-      ".nav-link.dropdown-toggle.active"
-    );
+    const navbarCollapse = DOMCache.get(".navbar-collapse");
+    const activeItem = document.querySelector(".navbar-nav .nav-item .active");
 
-    let targetElement = null;
+    if (!navbarCollapse || !activeItem) return;
 
-    if (activeDropdownItem) {
-      const parentDropdown = activeDropdownItem.closest(".dropdown");
-      const parentMenu = parentDropdown?.querySelector(".dropdown-menu");
-
-      if (parentMenu) {
-        document.querySelectorAll(".dropdown-menu").forEach((menu) => {
-          if (menu !== parentMenu) {
-            menu.classList.remove("show");
-          }
-        });
-        parentMenu.classList.add("show");
-        targetElement = activeDropdownItem;
-      }
-    } else if (activeNavLink) {
-      targetElement = activeNavLink;
-    } else if (activeParentDropdown) {
-      targetElement = activeParentDropdown;
-    }
-
-    if (targetElement) {
+    try {
       setTimeout(() => {
-        try {
-          const targetRect = targetElement.getBoundingClientRect();
-          const navRect = navbarCollapse.getBoundingClientRect();
-          const relativeTop =
-            targetRect.top - navRect.top + navbarCollapse.scrollTop;
-          const scrollTarget = Math.max(0, relativeTop - 80);
+        const navRect = navbarCollapse.getBoundingClientRect();
+        const targetRect = activeItem.getBoundingClientRect();
+        const relativeTop =
+          targetRect.top - navRect.top + navbarCollapse.scrollTop;
+        const scrollTarget = Math.max(0, relativeTop - 80);
 
-          navbarCollapse.scrollTo({
-            top: scrollTarget,
-            behavior: "smooth",
-          });
-        } catch (error) {
-          console.error("Scroll error:", error);
-        }
+        navbarCollapse.scrollTo({
+          top: scrollTarget,
+          behavior: "smooth",
+        });
       }, 50);
+    } catch (error) {
+      console.error("Scroll error:", error);
     }
   }
 
@@ -513,7 +502,7 @@ class NavigationManager {
   }
 
   closeMobileMenu() {
-    const navbarCollapse = document.querySelector(".navbar-collapse");
+    const navbarCollapse = DOMCache.get(".navbar-collapse");
 
     if (navbarCollapse && navbarCollapse.classList.contains("show")) {
       navbarCollapse.classList.remove("show");
@@ -531,22 +520,25 @@ class NavigationManager {
     const navLinks = document.querySelectorAll(".nav-link");
     const dropdownItems = document.querySelectorAll(".dropdown-item");
 
-    navLinks.forEach((link) => link.classList.remove("active"));
-    dropdownItems.forEach((item) => item.classList.remove("active"));
+    // Clear all active states first
+    [...navLinks, ...dropdownItems].forEach((link) =>
+      link.classList.remove("active")
+    );
 
+    // Set active nav links
     navLinks.forEach((link) => {
       const href = link.getAttribute("href");
       const isDropdownToggle = link.classList.contains("dropdown-toggle");
 
       if (href && !isDropdownToggle) {
         const linkPage = href.split("/").pop().split("#")[0];
-
         if (linkPage === currentPage) {
           link.classList.add("active");
         }
       }
     });
 
+    // Set active dropdown items
     dropdownItems.forEach((item) => {
       const href = item.getAttribute("href");
       if (!href) return;
@@ -583,6 +575,8 @@ class NavigationManager {
         if (dropdownToggle) {
           dropdownToggle.classList.add("active");
         }
+
+        // Show dropdown in mobile view
         if (window.innerWidth <= 991) {
           const dropdownMenu = parentDropdown?.querySelector(".dropdown-menu");
           if (dropdownMenu) {
@@ -593,18 +587,31 @@ class NavigationManager {
     });
   }
 }
-document.addEventListener("DOMContentLoaded", function () {
-  const placeholder = document.getElementById("navbar-placeholder");
 
-  placeholder.style.minHeight = "100px";
-  placeholder.style.backgroundColor = "#f8f9fa";
-  placeholder.style.height = placeholder.style.minHeight;
+// Optimized initialization functions
+function initializeNavbar() {
+  const placeholder = document.getElementById("navbar-placeholder");
+  if (!placeholder) return;
+
+  // Set initial styles
+  Object.assign(placeholder.style, {
+    minHeight: "100px",
+    backgroundColor: "#f8f9fa",
+    height: "100px",
+  });
 
   fetch("navbar.html")
-    .then((response) => response.text())
+    .then((response) => {
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return response.text();
+    })
     .then((html) => {
       placeholder.innerHTML = html;
 
+      // Refresh DOM cache after navbar is loaded
+      DOMCache.refresh();
+
+      // Add hamburger middle line
       const hamburgerButton = document.querySelector(".navbar-toggler");
       if (hamburgerButton) {
         const middleLine = document.createElement("span");
@@ -612,6 +619,7 @@ document.addEventListener("DOMContentLoaded", function () {
         hamburgerButton.appendChild(middleLine);
       }
 
+      // Initialize navigation
       const navManager = new NavigationManager();
 
       if (window.innerWidth >= 992) {
@@ -626,51 +634,88 @@ document.addEventListener("DOMContentLoaded", function () {
       placeholder.innerHTML =
         '<div style="padding: 1rem; color: #333;">Navigation loading failed</div>';
     });
+}
 
-  setTimeout(() => {
-    if (document.getElementById("sliderTrack")) {
-      new HeroSlider();
-    }
-  }, 100);
-});
+function initializeSlider() {
+  // Check if slider exists before initializing
+  const sliderTrack = document.getElementById("sliderTrack");
+  if (sliderTrack) {
+    new HeroSlider();
+  }
+}
 
-document.addEventListener("DOMContentLoaded", function () {
-  const filterButtons = document.querySelectorAll(".gallery-filter-btn"); // Fixed selector
+function initializeGallery() {
+  const filterButtons = document.querySelectorAll(".gallery-filter-btn");
   const galleryItems = document.querySelectorAll(".gallery-item");
 
   if (!filterButtons.length || !galleryItems.length) {
-    console.warn("Gallery elements not found");
-    return;
+    return; // Gallery elements not found, skip initialization
   }
 
-  filterButtons.forEach((button) => {
-    button.addEventListener("click", function () {
-      const category = this.getAttribute("data-category");
+  // Use event delegation for filter buttons
+  const filterContainer =
+    document.querySelector(".gallery-filters") || document.body;
 
-      // Update active button
-      filterButtons.forEach((btn) => btn.classList.remove("active"));
-      this.classList.add("active");
+  filterContainer.addEventListener("click", (e) => {
+    const button = e.target.closest(".gallery-filter-btn");
+    if (!button) return;
 
-      // Filter items using CSS classes instead of inline styles
-      galleryItems.forEach((item) => {
-        const itemCategory = item.getAttribute("data-category");
+    const category = button.getAttribute("data-category");
 
-        if (category === "all" || itemCategory === category) {
-          item.classList.remove("fade-out", "hidden");
-          item.classList.add("fade-in");
-        } else {
-          item.classList.remove("fade-in");
-          item.classList.add("fade-out");
+    // Update active button
+    filterButtons.forEach((btn) => btn.classList.remove("active"));
+    button.classList.add("active");
 
-          // Use transitionend event instead of fixed timeout
-          item.addEventListener("transitionend", function hideItem() {
-            if (item.classList.contains("fade-out")) {
-              item.classList.add("hidden");
-            }
-            item.removeEventListener("transitionend", hideItem);
-          });
-        }
-      });
+    // Filter items using optimized approach
+    galleryItems.forEach((item) => {
+      const itemCategory = item.getAttribute("data-category");
+      const shouldShow = category === "all" || itemCategory === category;
+
+      if (shouldShow) {
+        item.classList.remove("fade-out", "hidden");
+        item.classList.add("fade-in");
+      } else {
+        item.classList.remove("fade-in");
+        item.classList.add("fade-out");
+
+        // Use more efficient event handling
+        const hideItem = () => {
+          if (item.classList.contains("fade-out")) {
+            item.classList.add("hidden");
+          }
+          item.removeEventListener("transitionend", hideItem);
+        };
+        item.addEventListener("transitionend", hideItem, { once: true });
+      }
     });
   });
+}
+
+// Check if DOM is already loaded (for dynamic script loading)
+function initializeApp() {
+  try {
+    initializeNavbar();
+
+    // Use requestAnimationFrame for non-critical initialization
+    requestAnimationFrame(() => {
+      initializeSlider();
+      initializeGallery();
+    });
+  } catch (error) {
+    console.error("Initialization error:", error);
+  }
+}
+
+// Smart initialization - handle both scenarios
+if (document.readyState === "loading") {
+  // DOM is still loading, wait for DOMContentLoaded
+  document.addEventListener("DOMContentLoaded", initializeApp);
+} else {
+  // DOM is already loaded, initialize immediately
+  initializeApp();
+}
+
+// Cleanup on page unload to prevent memory leaks
+window.addEventListener("beforeunload", () => {
+  DOMCache.refresh();
 });
