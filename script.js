@@ -1,5 +1,3 @@
-// Optimized script.js - All functionality preserved with performance improvements
-
 // Cache frequently used DOM queries
 const DOMCache = {
   navbar: null,
@@ -40,7 +38,6 @@ class HeroSlider {
   }
 
   init() {
-    // Use arrow functions to maintain context and avoid binding
     this.prevBtn?.addEventListener("click", () => this.prevSlide());
     this.nextBtn?.addEventListener("click", () => this.nextSlide());
 
