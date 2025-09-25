@@ -1955,3 +1955,92 @@ footer {
     border-width: 3px;
   }
 }
+
+/* =================================
+   STAFF TABLE
+   ================================= */
+.staff-table {
+  border: 2px solid var(--primary-green);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.staff-table thead th {
+  background-color: var(--primary-green) !important;
+  color: white;
+  border-color: var(--primary-green) !important;
+  font-weight: 600;
+  text-align: left;
+  vertical-align: middle;
+  padding: 1rem;
+  font-size: 1.1rem;
+}
+
+.staff-table tbody tr {
+  transition: all 0.2s ease;
+}
+
+.staff-table tbody tr:hover {
+  background-color: var(--green-transparent);
+}
+
+.staff-table tbody td {
+  vertical-align: middle;
+  padding: 1rem;
+  border-color: #dee2e6;
+  text-align: left;
+}
+
+.staff-name {
+  font-weight: 500;
+  color: var(--text-dark);
+  font-size: 1rem;
+}
+
+.staff-designation {
+  color: var(--text-dark);
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .staff-table {
+    font-size: 0.9rem;
+  }
+
+  .staff-table thead th {
+    padding: 0.75rem 0.5rem;
+    font-size: 1rem;
+  }
+
+  .staff-table tbody td {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .staff-name,
+  .staff-designation {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .staff-table {
+    font-size: 0.85rem;
+  }
+
+  .staff-table thead th {
+    padding: 0.6rem 0.4rem;
+    font-size: 0.9rem;
+  }
+
+  .staff-table tbody td {
+    padding: 0.6rem 0.4rem;
+  }
+
+  .staff-name,
+  .staff-designation {
+    font-size: 0.85rem;
+  }
+}
